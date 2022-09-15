@@ -247,7 +247,7 @@ class Woocommerce_Servicedesk20 extends ServiceDesk20 {
 		return [
 			"order_number"=>$order->get_id(),
 			"is_paid"=> $order->is_paid(),
-			"client_name"=>$order->get_billing_first_name(),
+			"client_name"=>$order->get_billing_first_name()." ".$order->get_billing_last_name(),
 			"client_email"=>$order->get_billing_email(),
 			"product_list"=>$product_list,
 			"total_price"=>$order->get_total(),
