@@ -231,7 +231,7 @@ public function retrieveJsonPostData()
 	if(isset($_POST['mode']) && $_POST['mode']) return $_POST;
 	
 	$data = json_decode($rawData) && json_decode($rawData)->mode ? json_decode($rawData) : $result;
-	return $data;
+	return (array)$data;
   }
 
 public function handle_main_route(){
