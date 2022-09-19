@@ -1,6 +1,6 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 require_once(plugin_dir_path(dirname( __FILE__ ))."/includes/class-woocommerce-servicedesk.php");
 
 /**
@@ -226,10 +226,12 @@ public function returnError($error = false){
 
 public function retrieveJsonPostData()
   {
-    $rawData = file_get_contents("php://input");
-    // return json_decode($rawData);
+	$rawData = file_get_contents("php://input");
 	parse_str($rawData, $result);
-    return $result;
+	if(isset($_POST['mode']) && $_POST['mode']) return $_POST;
+	
+	$data = json_decode($rawData) && json_decode($rawData)->mode ? json_decode($rawData) : $result;
+	return $data;
   }
 
 public function handle_main_route(){
