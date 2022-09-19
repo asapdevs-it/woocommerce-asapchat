@@ -245,7 +245,7 @@ public function handle_main_route(){
 	$headers = getallheaders();
 
 	$keyBearer = trim(isset($headers['Authorization']) ? str_replace("Bearer", "", $headers['Authorization']) : "");
-	$data = $this->retrieveJsonPostData();
+	$data = (array) $this->retrieveJsonPostData();
 	$mode = isset($data["mode"]) ? $data["mode"] : false;
 	$email = isset($data["email"]) ? $data["email"] : false;
 	$order_number = isset($data["order_number"]) ? $data["order_number"] : false;
