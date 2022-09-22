@@ -237,15 +237,15 @@ class Woocommerce_Servicedesk20 extends ServiceDesk20 {
 
 			$product_list[] =[
 				"name"=>$product->get_title(),
-				"sku"=>$sku,
-				"price"=>$price,
-				"amount"=>$qty,
-				"total"=>$total_price,
+				"sku"=>(string) $sku,
+				"price"=>(string) $price,
+				"amount"=>(string) $qty,
+				"total"=>(string) $total_price,
 			];
 		}
 
 		return [
-			"order_number"=>$order->get_id(),
+			"order_number"=>(string) $order->get_id(),
 			"is_paid"=> $order->is_paid(),
 			"client_name"=>$order->get_billing_first_name()." ".$order->get_billing_last_name(),
 			"client_email"=>$order->get_billing_email(),
