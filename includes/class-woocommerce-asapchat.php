@@ -370,6 +370,7 @@ class Woocommerce_asapchat extends Asapchat {
 
 			$product = wc_get_product($productid);
 			$products_list[] = [
+				"id"=>$product->get_id(),
 				"name"=>$product->get_title(),
 				"sku"=>$product->get_sku(),
 				"price"=>$product->get_price(),
