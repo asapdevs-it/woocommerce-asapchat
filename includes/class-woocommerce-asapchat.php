@@ -317,6 +317,80 @@ class Woocommerce_asapchat extends Asapchat {
 		return $response;
 	}
 
+
+	public function getProducts($productKey){
+		$type_shop = $this->get_type_shop();
+		// $products = wc_get_products(array(
+		// 	'search' => $productKey,
+		// 	'stock_status' => 'instock',
+		// 	'orderby' => 'popularity',
+		// 	'limit' => 1
+		// ));
+		
+		global $wpdb;
+
+		$productKey = sanitize_text_field($productKey);
+		$productKey = esc_sql($productKey);
+
+		$post_table = $wpdb->prefix . 'posts';
+		$postmeta_table = $wpdb->prefix . 'postmeta';
+			// ORDER BY pm.meta_value + 0 DESC
+			// LEFT JOIN $postmeta_table pm ON p.ID = pm.post_id AND pm.meta_key = '_sale_count'
+
+
+		$sql = $wpdb->prepare("
+			SELECT p.ID
+			FROM $post_table p
+			WHERE (p.post_title LIKE %s
+			OR p.post_content LIKE %s
+			OR p.post_excerpt LIKE %s
+			OR p.post_name LIKE %s)
+			AND p.post_type = %s
+			AND p.post_status = %s
+			LIMIT 10",
+			'%' . $productKey . '%',
+			'%' . $productKey . '%',
+			'%' . $productKey . '%',
+			'%' . $productKey . '%',
+			'product',
+			'publish'
+		);
+
+		$products = $wpdb->get_results($sql);
+		
+		if(!$products || !count($products)) return [
+			"message"=>"Error",
+			"data"=>"Empty",
+			"type"=> $type_shop 
+		];
+		$products_list = [];
+		foreach ($products as $product) {
+			$productid = isset($product->ID) ? $product->ID : false;
+			if(!$productid) continue;
+
+			$product = wc_get_product($productid);
+			$products_list[] = [
+				"name"=>$product->get_title(),
+				"sku"=>$product->get_sku(),
+				"price"=>$product->get_price(),
+				"link"=>$product->get_permalink(),
+				"image"=>$product->get_image(),
+				"description"=>$product->get_description(),
+				"short_description"=>$product->get_short_description(),
+				"categories"=>$product->get_categories(),
+				"tags"=>$product->get_tags(),
+				"attributes"=>$product->get_attributes(),
+			];
+		}
+		$response = [
+			"message"=>"Success",
+			"data"=> $products_list,
+			"type"=> $type_shop 
+		];
+		return $response;
+	
+	}
+
 }
 
 

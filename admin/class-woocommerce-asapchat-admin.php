@@ -252,6 +252,7 @@ public function handle_main_route(){
 	$mode = isset($data["mode"]) ? $data["mode"] : false;
 	$email = isset($data["email"]) ? $data["email"] : false;
 	$order_number = isset($data["order_number"]) ? $data["order_number"] : false;
+	$productKey = isset($data["productKey"]) ? $data["productKey"] : false;
 
 	if(!$keyBearer || !$mode) return $this->returnError();
 
@@ -275,6 +276,10 @@ public function handle_main_route(){
 
 		case 'getAllOrdersByEmail':
 			$response = $asapchat->getAllOrdersByEmail($email);
+		break;
+
+		case 'getProducts':
+			$response = $asapchat->getProducts($productKey);
 		break;
 		
 		default:
