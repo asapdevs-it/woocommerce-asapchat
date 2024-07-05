@@ -331,6 +331,7 @@ class Woocommerce_asapchat extends Asapchat {
 
 		$productKey = sanitize_text_field($productKey);
 		$productKey = esc_sql($productKey);
+		$productKey = str_replace(' ', '%', $productKey);
 
 		$post_table = $wpdb->prefix . 'posts';
 		$postmeta_table = $wpdb->prefix . 'postmeta';
