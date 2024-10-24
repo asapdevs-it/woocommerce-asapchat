@@ -380,6 +380,20 @@ class Woocommerce_asapchat extends Asapchat {
 				}
 			}
 
+			$attributes = $product->get_attributes();
+			$attributesValues = [];
+
+			foreach ($attributes as $attribute) {
+				$attributeName = $attribute->get_name();
+				$attributeValue = $attribute->get_options();
+				$optionsNames = [];
+				foreach ($attributeValue as $option) {
+					$term = get_term($option);
+					$optionsNames[] = $term ? $term->name : $option;
+				}
+				$attributesValues[$attributeName] = $optionsNames;
+			}
+
 			$products_list[] = [
 				"id"=>$product->get_id(),
 				"name"=>$product->get_title(),
@@ -392,7 +406,7 @@ class Woocommerce_asapchat extends Asapchat {
 				"short_description"=>$product->get_short_description(),
 				"categories"=>$product->get_categories(),
 				"tags"=>$product->get_tags(),
-				"attributes"=>$product->get_attributes(),
+				"attributes"=>$attributesValues,
 				"variations"=>$onlyTitles
 			];
 		}
