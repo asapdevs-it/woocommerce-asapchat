@@ -331,10 +331,10 @@ class Woocommerce_asapchat extends Asapchat {
 
 		$productKey = sanitize_text_field($productKey);
 		$productKey = esc_sql($productKey);
-		$productKey = str_replace(' ', '%', $productKey);
+		// $productKey = str_replace(' ', '%', $productKey);
 
-		$post_table = $wpdb->prefix . 'posts';
-		$postmeta_table = $wpdb->prefix . 'postmeta';
+		// $post_table = $wpdb->prefix . 'posts';
+		// $postmeta_table = $wpdb->prefix . 'postmeta';
 			// ORDER BY pm.meta_value + 0 DESC
 			// LEFT JOIN $postmeta_table pm ON p.ID = pm.post_id AND pm.meta_key = '_sale_count'
 
@@ -357,40 +357,72 @@ class Woocommerce_asapchat extends Asapchat {
 		// 	'publish'
 		// );
 
-		$post_table = $wpdb->prefix . 'posts';
-		$postmeta_table = $wpdb->prefix . 'postmeta';
-		$terms_table = $wpdb->prefix . 'terms';
-		$term_relationships_table = $wpdb->prefix . 'term_relationships';
-		$term_taxonomy_table = $wpdb->prefix . 'term_taxonomy';
+		// $post_table = $wpdb->prefix . 'posts';
+		// $postmeta_table = $wpdb->prefix . 'postmeta';
+		// $terms_table = $wpdb->prefix . 'terms';
+		// $term_relationships_table = $wpdb->prefix . 'term_relationships';
+		// $term_taxonomy_table = $wpdb->prefix . 'term_taxonomy';
 
-		$sql = $wpdb->prepare("
-			SELECT DISTINCT p.ID
-			FROM $post_table p
-			LEFT JOIN $postmeta_table pm ON p.ID = pm.post_id
-			LEFT JOIN $term_relationships_table tr ON p.ID = tr.object_id
-			LEFT JOIN $term_taxonomy_table tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
-			LEFT JOIN $terms_table t ON tt.term_id = t.term_id
-			WHERE (
-				p.post_title LIKE %s
-				OR p.post_content LIKE %s
-				OR p.post_excerpt LIKE %s
-				OR p.post_name LIKE %s
-				OR t.name LIKE %s  -- wyszukiwanie po nazwach atrybutów
-				OR (pm.meta_key LIKE 'attribute_%%' AND pm.meta_value LIKE %s)  -- wyszukiwanie po atrybutach wariantów
-			)
-			AND p.post_type IN ('product', 'product_variation')
-			AND p.post_status = %s
-			LIMIT 10",
-			'%' . $productKey . '%',
-			'%' . $productKey . '%',
-			'%' . $productKey . '%',
-			'%' . $productKey . '%',
-			'%' . $productKey . '%',
-			'%' . $productKey . '%',
-			'publish'
-		);
+		// $sql = $wpdb->prepare("
+		// 	SELECT DISTINCT p.ID
+		// 	FROM $post_table p
+		// 	LEFT JOIN $postmeta_table pm ON p.ID = pm.post_id
+		// 	LEFT JOIN $term_relationships_table tr ON p.ID = tr.object_id
+		// 	LEFT JOIN $term_taxonomy_table tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+		// 	LEFT JOIN $terms_table t ON tt.term_id = t.term_id
+		// 	WHERE (
+		// 		p.post_title LIKE %s
+		// 		OR p.post_content LIKE %s
+		// 		OR p.post_excerpt LIKE %s
+		// 		OR p.post_name LIKE %s
+		// 		OR t.name LIKE %s  -- wyszukiwanie po nazwach atrybutów
+		// 		OR (pm.meta_key LIKE 'attribute_%%' AND pm.meta_value LIKE %s)  -- wyszukiwanie po atrybutach wariantów
+		// 	)
+		// 	AND p.post_type IN ('product', 'product_variation')
+		// 	AND p.post_status = %s
+		// 	LIMIT 10",
+		// 	'%' . $productKey . '%',
+		// 	'%' . $productKey . '%',
+		// 	'%' . $productKey . '%',
+		// 	'%' . $productKey . '%',
+		// 	'%' . $productKey . '%',
+		// 	'%' . $productKey . '%',
+		// 	'publish'
+		// );
 
-		$products = $wpdb->get_results($sql);
+		$keywords_array = explode(' ', $productKey);
+    
+		// Przygotowanie części WHERE zapytania
+		$where_clauses = [];
+		foreach ($keywords_array as $keyword) {
+			$keyword = esc_sql($keyword); // Bezpieczeństwo przed SQL injection
+			$where_clauses[] = "
+				p.post_title LIKE '%$keyword%' OR
+				p.post_excerpt LIKE '%$keyword%' OR
+				p.post_content LIKE '%$keyword%' OR
+				pm.meta_value LIKE '%$keyword%' OR
+				t.name LIKE '%$keyword%'
+			";
+		}
+
+    // Złączenie warunków w jeden ciąg
+    $where_sql = implode(' AND ', $where_clauses);
+
+    // Zapytanie SQL
+    $query = "
+        SELECT p.ID
+        FROM {$wpdb->posts} p
+        LEFT JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+        LEFT JOIN {$wpdb->terms} t ON pm.meta_value = t.term_id
+        LEFT JOIN {$wpdb->term_taxonomy} tt ON t.term_id = tt.term_id
+        LEFT JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
+        WHERE p.post_type = 'product'
+          AND p.post_status = 'publish'
+          AND ($where_sql)
+        GROUP BY p.ID;
+    ";
+
+		$products = $wpdb->get_results($query);
 		
 		if(!$products || !count($products)) return [
 			"message"=>"Error",
