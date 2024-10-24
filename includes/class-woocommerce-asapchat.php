@@ -339,21 +339,54 @@ class Woocommerce_asapchat extends Asapchat {
 			// LEFT JOIN $postmeta_table pm ON p.ID = pm.post_id AND pm.meta_key = '_sale_count'
 
 
+		// $sql = $wpdb->prepare("
+		// 	SELECT p.ID
+		// 	FROM $post_table p
+		// 	WHERE (p.post_title LIKE %s
+		// 	OR p.post_content LIKE %s
+		// 	OR p.post_excerpt LIKE %s
+		// 	OR p.post_name LIKE %s)
+		// 	AND p.post_type = %s
+		// 	AND p.post_status = %s
+		// 	LIMIT 10",
+		// 	'%' . $productKey . '%',
+		// 	'%' . $productKey . '%',
+		// 	'%' . $productKey . '%',
+		// 	'%' . $productKey . '%',
+		// 	'product',
+		// 	'publish'
+		// );
+
+		$post_table = $wpdb->prefix . 'posts';
+		$postmeta_table = $wpdb->prefix . 'postmeta';
+		$terms_table = $wpdb->prefix . 'terms';
+		$term_relationships_table = $wpdb->prefix . 'term_relationships';
+		$term_taxonomy_table = $wpdb->prefix . 'term_taxonomy';
+
 		$sql = $wpdb->prepare("
-			SELECT p.ID
+			SELECT DISTINCT p.ID
 			FROM $post_table p
-			WHERE (p.post_title LIKE %s
-			OR p.post_content LIKE %s
-			OR p.post_excerpt LIKE %s
-			OR p.post_name LIKE %s)
-			AND p.post_type = %s
+			LEFT JOIN $postmeta_table pm ON p.ID = pm.post_id
+			LEFT JOIN $term_relationships_table tr ON p.ID = tr.object_id
+			LEFT JOIN $term_taxonomy_table tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+			LEFT JOIN $terms_table t ON tt.term_id = t.term_id
+			WHERE (
+				p.post_title LIKE %s
+				OR p.post_content LIKE %s
+				OR p.post_excerpt LIKE %s
+				OR p.post_name LIKE %s
+				OR t.name LIKE %s  -- wyszukiwanie po nazwach atrybutów
+				OR (pm.meta_key LIKE 'attribute_%%' AND pm.meta_value LIKE %s)  -- wyszukiwanie po atrybutach wariantów
+			)
+			AND p.post_type IN ('product', 'product_variation')
 			AND p.post_status = %s
 			LIMIT 10",
 			'%' . $productKey . '%',
 			'%' . $productKey . '%',
 			'%' . $productKey . '%',
 			'%' . $productKey . '%',
-			'product',
+			'%' . $productKey . '%',
+			'%' . $productKey . '%',
 			'publish'
 		);
 
