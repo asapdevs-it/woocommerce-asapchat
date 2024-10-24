@@ -370,18 +370,30 @@ class Woocommerce_asapchat extends Asapchat {
 			if(!$productid) continue;
 
 			$product = wc_get_product($productid);
+			$haveVariations = $product->has_child();
+			if($haveVariations){
+				$variations = $product->get_children();
+				$onlyTitles = [];
+				foreach ($variations as $variation) {
+					$variation = wc_get_product($variation);
+					$onlyTitles[] = $variation->get_title();
+				}
+			}
+
 			$products_list[] = [
 				"id"=>$product->get_id(),
 				"name"=>$product->get_title(),
 				"sku"=>$product->get_sku(),
 				"price"=>$product->get_price(),
 				"link"=>$product->get_permalink(),
+				"weight"=>$product->get_weight(),
 				"image"=>$product->get_image(),
 				"description"=>$product->get_description(),
 				"short_description"=>$product->get_short_description(),
 				"categories"=>$product->get_categories(),
 				"tags"=>$product->get_tags(),
 				"attributes"=>$product->get_attributes(),
+				"variations"=>$onlyTitles
 			];
 		}
 		$response = [
