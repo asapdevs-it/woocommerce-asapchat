@@ -222,6 +222,16 @@ class Woocommerce_asapchat extends Asapchat {
 		return $this->version;
 	}
 
+	public function getTrackingOrder($order){
+		$keys_meta = ['_easypack_parcel_tracking', '_easypack_parcel_number', '_easypack_parcel_status'];
+		$data = [];
+		foreach ($keys_meta as $key) {
+			$meta = $order->get_meta($key);
+			if($meta) $data[$key] = $meta;
+		}
+		return $data;
+	}
+
 	public function prepare_order_for_response($order){
 		$billing_address = $order->get_billing_address_1().", ". $order->get_billing_address_2();
 		$delivery_address = $order->get_shipping_address_1().", ". $order->get_shipping_address_2();
@@ -254,6 +264,7 @@ class Woocommerce_asapchat extends Asapchat {
 			"product_list"=>$product_list,
 			"total_price"=>$order->get_total(),
 			"current_status"=>$statusName,
+			"tracking"=>$this->getTrackingOrder($order),
 		   //  "statuses_history"=><Array>[
 		   //  "name"=><String>,
 		   //  "date"=><Date format "Y-m-d H=>i=>s">,
