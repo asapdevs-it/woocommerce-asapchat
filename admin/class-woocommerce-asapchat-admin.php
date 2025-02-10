@@ -280,6 +280,232 @@ public function handle_main_route(){
 
 		case 'getProducts':
 			$response = $asapchat->getProducts($productKey);
+			//bledy do poprawy
+// 			<b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_categories jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej
+// proszę użyć wc_get_product_category_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line
+// <b>6114</b><br />
+// <br />
+// <b>Deprecated</b>: Funkcja WC_Product::get_tags jest <strong>przestarzała</strong> od wersji 3.0! Zamiast jej proszę
+// użyć wc_get_product_tag_list. in <b>/var/www/html/zmilosci/wp-includes/functions.php</b> on line <b>6114</b><br />
+// <br />
+// <b>Warning</b>: Undefined variable $onlyTitles in
+// <b>/var/www/html/zmilosci/wp-content/plugins/woocommerce-asapchat-main/includes/class-woocommerce-asapchat.php</b> on
+// line <b>486</b><br />
+// <br />
+// <b>Fatal error</b>: Allowed memory size of 1098907648 bytes exhausted (tried to allocate 20480 bytes) in
+// <b>/var/www/html/zmilosci/wp-content/plugins/redis-cache-pro/src/Clients/Client.php</b> on line <b>97</b><br />
+// <br />
+// <b>Fatal error</b>: Allowed memory size of 1098907648 bytes exhausted (tried to allocate 20480 bytes) in
+// <b>/var/www/html/zmilosci/wp-includes/class-wp-fatal-error-handler.php</b> on line <b>76</b><br />
 		break;
 		
 		default:

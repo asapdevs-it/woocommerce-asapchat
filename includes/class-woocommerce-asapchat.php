@@ -430,7 +430,8 @@ class Woocommerce_asapchat extends Asapchat {
         WHERE p.post_type = 'product'
           AND p.post_status = 'publish'
           AND ($where_sql)
-        GROUP BY p.ID;
+        GROUP BY p.ID
+		LIMIT 10
     ";
 
 		$products = $wpdb->get_results($query);
@@ -470,6 +471,14 @@ class Woocommerce_asapchat extends Asapchat {
 				$attributesValues[$attributeName] = $optionsNames;
 			}
 
+			$images = [];
+			$main_image_url = get_the_post_thumbnail_url($productid);
+			$images[] = $main_image_url;
+			// $gallery = $product->get_gallery_image_ids();
+			// foreach ($gallery as $image) {
+			// 	$images[] = wp_get_attachment_url($image);
+			// }
+
 			$products_list[] = [
 				"id"=>$product->get_id(),
 				"name"=>$product->get_title(),
@@ -477,7 +486,7 @@ class Woocommerce_asapchat extends Asapchat {
 				"price"=>$product->get_price(),
 				"link"=>$product->get_permalink(),
 				"weight"=>$product->get_weight(),
-				"image"=>$product->get_image(),
+				"image"=>$images,
 				"description"=>$product->get_description(),
 				"short_description"=>$product->get_short_description(),
 				"categories"=>$product->get_categories(),
