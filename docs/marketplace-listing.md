@@ -139,7 +139,7 @@ Privacy policy: https://asapchat.io/polityka-prywatnosci
 Przed zgłoszeniem:
 
 - [ ] Otwórz sklep z włączonymi widgetami i sprawdź w narzędziach deweloperskich przeglądarki (karta Sieć), z jakimi hostami rozmawiają widgety. Oczekiwane: `asapchat.io` (skrypty) i `panel.asapchat.io` (API). Każdy inny host dopisz do tekstu wyżej.
-- [ ] Adresy regulaminu i polityki prywatności odpowiadają kodem 200.
+- [ ] Adresy regulaminu i polityki prywatności odpowiadają kodem 200 po przekierowaniu (`asapchat.io/...` przekierowuje na `panel.asapchat.io/...`).
 
 ## 8. Szkic `readme.txt`
 
@@ -195,7 +195,7 @@ Connect your site to AsapChat in one click: AI chat that answers customers and a
 
 Na końcu `readme.txt` dopisz też informację o foncie: `Open Sans, SIL Open Font License 1.1, bundled in admin/fonts/`.
 
-Uwagi: `X.Y` w szkicu to miejsca do wypełnienia w dniu wydania, nie kopiuj ich dosłownie. `Contributors` to login konta WordPress.org. `Tested up to` to tylko numer wersji głównej, aktualny w dniu wydania. `Requires at least` ustawiamy na „najnowsza minus 2” w dniu wydania. `Stable tag` nigdy `trunk`.
+Uwagi: `X.Y` w szkicu to miejsca do wypełnienia, nie kopiuj ich dosłownie. Zadanie 01 wpisuje w `readme.txt` prawdziwe wartości (`Requires at least` z nagłówka wtyczki, `Tested up to` = aktualna stabilna wersja WordPressa w dniu PR), a zadanie 14 aktualizuje je w dniu wydania. `Contributors` to login konta WordPress.org. `Tested up to` to tylko numer wersji głównej, aktualny w dniu wydania. `Requires at least` ustawiamy na „najnowsza minus 2” w dniu wydania. `Stable tag` nigdy `trunk`.
 
 ## 9. Grafiki (katalog `.wordpress-org/` w repo, w SVN trafiają do `/assets/`, nie do `trunk`)
 
@@ -243,7 +243,7 @@ Numer w nazwie pliku odpowiada numerowi linii w sekcji `== Screenshots ==`. Nazw
 2. Zasoby z cudzego CDN, w tym fonty z Google Fonts w panelu admina.
 3. Brak escapowania, sanityzacji lub nonce.
 4. Zbyt ogólne prefiksy funkcji i klas.
-5. Cudza marka na początku slugu albo zgłoszenie z prywatnego adresu e-mail (Gmail) dla wtyczki firmowej.
+5. Cudza marka na początku slugu. Reviewer może też zapytać o prawo do marki, gdy konto nie ma adresu w domenie firmy: konto zakładasz na swoim adresie, a na pytanie odpowiadasz według `docs/accounts.md` („Zanim zaczniesz”).
 6. `Stable tag` niezgodny z wersją w nagłówku.
 7. Własny updater.
 8. Pliki deweloperskie w zipie.

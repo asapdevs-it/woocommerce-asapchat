@@ -17,7 +17,7 @@ Wtyczka łączy stronę z kontem AsapChat, wstawia skrypt czatu i wyszukiwarki, 
 
 - PHP 7.4 do 8.4 (CI: 7.4, 8.1, 8.3), WordPress „latest” i dwie wersje wstecz, WooCommerce opcjonalny.
 - W paczce produkcyjnej nie ma nic z Composera ani z npm, bez bundlera. Composer i npm to tylko narzędzia deweloperskie. Czysty PHP, jeden plik CSS panelu, dwa krótkie pliki JS (panel i opóźnienie czatu), fonty Open Sans w paczce.
-- Narzędzia deweloperskie (specyfikacja, punkt 21): Docker, Node 20, Composer 2, `wp-env` (lokalny WordPress w Dockerze), PHPUnit z Brain Monkey (testy jednostkowe bez uruchamiania WordPressa), PHPCS ze standardem `WordPress`, Plugin Check.
+- Narzędzia deweloperskie (specyfikacja, punkt 21): Docker, Node 20, Composer 2, `@wordpress/env` jako zależność deweloperska w `package.json` (lokalny WordPress w Dockerze; pakiet npm o nazwie `wp-env` to inny, niepowiązany pakiet, nie instaluj go), PHPUnit z Brain Monkey (testy jednostkowe bez uruchamiania WordPressa), PHPCS ze standardem `WordPress`, Plugin Check.
 
 ## Układ katalogów (tworzy zadanie 01)
 
@@ -38,7 +38,7 @@ public/asapchat-delay.js          dokłada skrypt czatu po opóźnieniu
 languages/                        asapchat.pot, asapchat-pl_PL.po/.mo
 .wordpress-org/                   banner, ikona, zrzuty (trafiają do SVN /assets)
 tests/                            testy PHPUnit (Brain Monkey), tests/fixtures/ z odpowiedziami z kontraktu
-.wp-env.json, composer.json, phpcs.xml.dist, phpunit.xml.dist, .github/workflows/ci.yml
+.wp-env.json, package.json, package-lock.json, .distignore, composer.json, phpcs.xml.dist, phpunit.xml.dist, .github/workflows/ci.yml
 ```
 
 Zadanie 01 usuwa stary prototyp (`admin/` poza `admin/img/`, `includes/`, `public/`, `languages/`, `woocommerce-asapchat.php`, `class-asapchat.php`, `index.php`, stary `uninstall.php`, `README.txt`) i zakłada ten układ. Nie dopisuj nic do starych plików.
@@ -69,8 +69,9 @@ Zadanie 01 usuwa stary prototyp (`admin/` poza `admin/img/`, `includes/`, `publi
 composer install
 vendor/bin/phpcs
 vendor/bin/phpunit
-npx wp-env start
-npx wp-env run cli wp plugin check asapchat
+npm ci
+npx @wordpress/env start
+npx @wordpress/env run cli wp plugin check asapchat --exclude-directories=.ai,.github,docs,tests,vendor,node_modules
 ```
 
 `composer install` instaluje tylko narzędzia deweloperskie. `phpcs` sprawdza standardy `WordPress` i `PHPCompatibilityWP`. Do zmergowania zadania 01 te komendy nie mają jeszcze na czym działać: pierwsza bramka to PR zadania 01.

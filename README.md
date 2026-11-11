@@ -29,7 +29,7 @@ Miejsce publikacji: katalog wtyczek WordPress.org. Slug (stały identyfikator w 
 ## Status
 
 - Kontrakt z AsapChat jest gotowy i działa na produkcji: `docs/CONNECT-API.md`. Punkt 7 mówi, jak założyć konto testowe i co da się sprawdzić na `localhost`.
-- Lokalny sklep krok po kroku (`wp-env`, WooCommerce, dane przykładowe): specyfikacja, punkt 21.4.
+- Lokalny sklep krok po kroku (`@wordpress/env`, WooCommerce, dane przykładowe): specyfikacja, punkt 21.4.
 - Lista zadań: specyfikacja, punkt 20. Kolejność wyznacza numer w tytule zadania (01 do 14), nie numer issue na GitHubie.
 - Na `main` leży jeszcze stary prototyp (`admin/`, `includes/`, `public/`, `woocommerce-asapchat.php`). Usuwa go zadanie 01. Nie dopisuj do niego i nie kopiuj z niego kodu.
 - Gałąź `legacy` to archiwum tego prototypu, gałąź `master` to stara pozostałość. Obie ignoruj.

@@ -113,7 +113,7 @@ Nieaktywny przełącznik nie zmienia zapisanej wartości. Dzięki temu wyszukiwa
 
 | Pole | Klucz | Reguła |
 |---|---|---|
-| Nazwa asystenta | `bot_name` | tekst, do 40 znaków |
+| Nazwa asystenta | `bot_name` | tekst, wymagany, 1 do 40 znaków (pusty = błąd „Podaj nazwę asystenta.”) |
 | Kolor główny | `main_color` | `#rrggbb`, pole koloru i pole tekstowe |
 | Pozycja | `position` | „Prawy dół” = `right-bottom`, „Lewy dół” = `left-bottom` |
 | Powitanie 1 | `greeting_1` | tekst do 120 znaków, puste = bez dymka |
@@ -473,9 +473,9 @@ Zadania 02 i 03 oraz 04 i 05 można robić równolegle (dwóch deweloperów).
 Etykiety: `feature`, `priority-high`, `risk-low`, `skip-qa`.
 
 - [ ] Stary prototyp jest usunięty z `main`: katalogi `admin/` (poza `admin/img/`), `includes/`, `public/`, `languages/` oraz pliki `woocommerce-asapchat.php`, `class-asapchat.php`, `index.php`, `uninstall.php`. Nie przenosisz z nich kodu. `LICENSE.txt` zostaje.
-- [ ] `README.txt` zmienia nazwę na `readme.txt` (`git mv -f README.txt readme.txt`, na macOS zwykłe `git mv` nie zadziała) i dostaje treść szkicu z `docs/marketplace-listing.md`, punkt 8.
+- [ ] `README.txt` zmienia nazwę na `readme.txt` (`git mv -f README.txt readme.txt`, na macOS zwykłe `git mv` nie zadziała) i dostaje treść szkicu z `docs/marketplace-listing.md`, punkt 8, z prawdziwymi wartościami zamiast `X.Y`: `Requires at least` takie jak w nagłówku wtyczki, `Tested up to` = aktualna stabilna wersja WordPressa w dniu PR. Do repo nie trafia żaden znacznik do wypełnienia. Przy wydaniu (zadanie 14) aktualizujesz obie wartości.
 - [ ] Struktura katalogów z `AGENTS.md`. Plik główny to `asapchat.php` z nagłówkiem wtyczki, stałymi i deklaracją HPOS.
-- [ ] Narzędzia z punktu 21 działają lokalnie i w GitHub Actions: `composer install`, `vendor/bin/phpcs`, `vendor/bin/phpunit`, Plugin Check przez `wp-env`.
+- [ ] Narzędzia z punktu 21 działają lokalnie i w GitHub Actions: `composer install`, `vendor/bin/phpcs`, `vendor/bin/phpunit`, Plugin Check przez `@wordpress/env`. `package.json` z zależnością deweloperską `@wordpress/env` i `package-lock.json` są w repo.
 - [ ] W paczce są `admin/fonts/` (Open Sans 400, 600, 700, 800, latin i latin-ext, osiem plików woff2 z `@fontsource/open-sans`) oraz `admin/img/asapchat-logo-white.svg` (plik już jest w repo).
 - [ ] Aktywacja wtyczki nie wysyła żadnego żądania HTTP (test z punktu 21.2).
 
@@ -484,6 +484,8 @@ Etykiety: `feature`, `priority-high`, `risk-low`, `skip-qa`.
 Etykiety: `feature`, `priority-high`, `risk-low`, `needs-qa`.
 
 - [ ] Strona Ustawienia > AsapChat pokazuje stany „Niepołączony”, „Połączony” i „Błąd”: układ jak w makiecie, teksty i warianty według punktu 4, na danych przykładowych z kontraktu (punkty 4 i 7a).
+- [ ] Stany przełącza skrypt deweloperski `tests/fixtures/seed-state.php`, uruchamiany przez `npx @wordpress/env run cli wp eval-file wp-content/plugins/asapchat/tests/fixtures/seed-state.php <stan>`. Skrypt ustawia opcje wtyczki (`wp option update`) na dane przykładowe. Nie trafia do paczki (`tests` jest w `.distignore`), komendy są opisane w PR. Żadnych parametrów w adresie ani trybu diagnostycznego.
+- [ ] Zrzuty w PR (390 px i 1280 px) obejmują: „Niepołączony”, „Niepołączony” bez przycisku (strona po `http` poza `localhost`), „Niepołączony” bez WooCommerce, „Połączony” z `search.enabled=false`, „Połączony” z wyszukiwarką włączoną i jeszcze niewidzianą (przykład 7a), „Błąd” (401) i „Błąd” dla innej domeny (409).
 - [ ] Nagłówek: czarny pasek, białe logo, fioletowa linia 4 px. W stanie „Połączony” nazwa sklepu, plan, „Otwórz panel AsapChat”, „Rozłącz”.
 - [ ] Wszystkie klasy mają prefiks `asapchat-`, reguły są pod `.asapchat-screen`, CSS ładuje się tylko na stronie wtyczki.
 - [ ] Ekran działa na 390 px i 1280 px. Karta Sieć nie pokazuje żądań do cudzych domen.
@@ -538,7 +540,7 @@ Etykiety: `feature`, `priority-high`, `risk-medium`, `needs-qa`.
 
 Etykiety: `feature`, `priority-high`, `risk-medium`, `needs-qa`.
 
-- [ ] Karta ma pola: nazwa asystenta, kolor główny (pole koloru i pole tekstowe), pozycja, powitanie 1 i 2, z licznikami znaków. Wartości startowe z `settings` w configu.
+- [ ] Karta ma pola: nazwa asystenta, kolor główny (pole koloru i pole tekstowe), pozycja, powitanie 1 i 2, z licznikami znaków. Wartości startowe z `settings` w configu. Nazwa asystenta jest wymagana (1 do 40 znaków), pusta daje błąd „Podaj nazwę asystenta.”
 - [ ] „Zapisz zmiany” wysyła `PATCH` tylko ze zmienionymi polami i zapisuje zwrócony config.
 - [ ] Błędy lokalne i `422` są pokazane przy polach tekstami z punktu 4.3 (pole wskazują klucze `errors`). Wpisane wartości nie znikają.
 - [ ] Przy `429`, `5xx` i braku sieci ustawienia lokalne są zapisane, a użytkownik widzi komunikat o niezapisanym wyglądzie.
@@ -602,8 +604,9 @@ Etykiety: `feature`, `priority-medium`, `risk-medium`, `needs-qa`.
 
 ### 21.1 Co instalujesz
 
-- Docker (dla `wp-env`), Node 20 LTS, Composer 2, PHP 8.1 lub nowszy lokalnie.
-- npm służy tylko narzędziom deweloperskim (`wp-env`, pobranie fontów). Do paczki wtyczki nie trafia nic z `node_modules` ani z `vendor`.
+- Docker (dla `@wordpress/env`), Node 20 LTS, Composer 2, PHP 8.1 lub nowszy lokalnie.
+- npm służy tylko narzędziom deweloperskim (`@wordpress/env`, pobranie fontów). Do paczki wtyczki nie trafia nic z `node_modules` ani z `vendor`.
+- `package.json` w katalogu głównym ma jedną zależność deweloperską: `@wordpress/env` (lokalny WordPress w Dockerze, polecenie `wp-env`). Instalujesz ją przez `npm ci` i wołasz jako `npx @wordpress/env ...`. Pakiet npm o nazwie `wp-env` to inny, niepowiązany pakiet: nie instaluj go.
 
 `composer.json`, sekcja `require-dev`: `phpunit/phpunit` (^9.6), `brain/monkey` (^2.6), `yoast/phpunit-polyfills`, `wp-coding-standards/wpcs` (^3), `phpcompatibility/phpcompatibility-wp`, `dealerdirect/phpcodesniffer-composer-installer`. W `config.platform.php` wpisz `7.4`, żeby zależności instalowały się na każdej wersji z macierzy.
 
@@ -622,7 +625,7 @@ Etykiety: `feature`, `priority-medium`, `risk-medium`, `needs-qa`.
 `.github/workflows/ci.yml`, uruchamiany dla każdego PR:
 
 1. Zadanie `php` w macierzy PHP 7.4, 8.1, 8.3: `composer install`, `vendor/bin/phpcs`, `vendor/bin/phpunit`.
-2. Zadanie `plugin-check` (Node 20): `npx wp-env start`, potem `npx wp-env run cli wp plugin check asapchat`.
+2. Zadanie `plugin-check` (Node 20): `npm ci`, `npx @wordpress/env start`, potem `npx @wordpress/env run cli wp plugin check asapchat --exclude-directories=.ai,.github,docs,tests,vendor,node_modules`.
 
 Bramka walidacji lokalnie (te same komendy są w `AGENTS.md` i `.ai/agentic.config.json`):
 
@@ -630,8 +633,9 @@ Bramka walidacji lokalnie (te same komendy są w `AGENTS.md` i `.ai/agentic.conf
 composer install
 vendor/bin/phpcs
 vendor/bin/phpunit
-npx wp-env start
-npx wp-env run cli wp plugin check asapchat
+npm ci
+npx @wordpress/env start
+npx @wordpress/env run cli wp plugin check asapchat --exclude-directories=.ai,.github,docs,tests,vendor,node_modules
 ```
 
 Fonty: `npm pack @fontsource/open-sans`, z rozpakowanego archiwum bierzesz z katalogu `files/` osiem plików `open-sans-latin-{400,600,700,800}-normal.woff2` i `open-sans-latin-ext-{400,600,700,800}-normal.woff2` i kopiujesz je do `admin/fonts/`. Licencję (SIL OFL 1.1) wpisujesz w `readme.txt`.
@@ -654,16 +658,16 @@ Fonty: `npm pack @fontsource/open-sans`, z rozpakowanego archiwum bierzesz z kat
 }
 ```
 
-Mapowanie jest potrzebne, bo katalog repo nazywa się `woocommerce-asapchat`, a wtyczka musi leżeć w `plugins/asapchat`.
+Mapowanie jest potrzebne, bo katalog repo nazywa się `woocommerce-asapchat`, a wtyczka musi leżeć w `plugins/asapchat`. Podpięty jest cały katalog repo, dlatego Plugin Check uruchamiasz z `--exclude-directories=.ai,.github,docs,tests,vendor,node_modules`. Te same katalogi (oraz `.wp-env.json`, `package.json`, `package-lock.json`, `composer.*`, `phpcs.xml.dist`, `phpunit.xml.dist`, pliki `*.md` z katalogu głównego) wpisujesz do `.distignore`, z którego korzysta budowanie paczki wydania.
 
-1. `npx wp-env start`. Sklep: `http://localhost:8888`, panel: `http://localhost:8888/wp-admin` (login `admin`, hasło `password`).
-2. `npx wp-env run cli wp plugin activate asapchat`.
-3. Dane przykładowe WooCommerce: `npx wp-env run cli wp plugin install wordpress-importer --activate`, potem `npx wp-env run cli wp import wp-content/plugins/woocommerce/sample-data/sample_products.xml --authors=create`.
-4. Motyw sklepu: `npx wp-env run cli wp theme install storefront --activate`.
+1. `npx @wordpress/env start`. Sklep: `http://localhost:8888`, panel: `http://localhost:8888/wp-admin` (login `admin`, hasło `password`).
+2. `npx @wordpress/env run cli wp plugin activate asapchat`.
+3. Dane przykładowe WooCommerce: `npx @wordpress/env run cli wp plugin install wordpress-importer --activate`, potem `npx @wordpress/env run cli wp import wp-content/plugins/woocommerce/sample-data/sample_products.xml --authors=create`.
+4. Motyw sklepu: `npx @wordpress/env run cli wp theme install storefront --activate`.
 5. Załóż własne darmowe konto AsapChat (`docs/CONNECT-API.md`, punkt 7) i kliknij „Połącz z AsapChat” na ekranie wtyczki. Adres `http://localhost:8888` przechodzi bez `https`.
-6. Inna wersja PHP albo WordPressa z macierzy: zmień `phpVersion` lub `core` w pliku `.wp-env.override.json` (nie commituj go) i uruchom `npx wp-env start --update`.
+6. Inna wersja PHP albo WordPressa z macierzy: zmień `phpVersion` lub `core` w pliku `.wp-env.override.json` (nie commituj go) i uruchom `npx @wordpress/env start --update`.
 
-Na `localhost` sprawdzisz połączenie, czat, wygląd, wykluczenia, opóźnienie, błędy i rozłączenie. Wyszukiwarkę i stan „Podłączone” sprawdzisz dopiero na sklepie widocznym z internetu pod `https`: uruchom tunel do portu 8888 (np. `cloudflared tunnel --url http://localhost:8888`), ustaw adres tunelu jako adres witryny (`npx wp-env run cli wp option update home <adres>` i to samo dla `siteurl`), połącz wtyczkę od nowa i podłącz WooCommerce w panelu AsapChat (`sources.connect_url`). Szczegóły ograniczeń: kontrakt, punkt 7.
+Na `localhost` sprawdzisz połączenie, czat, wygląd, wykluczenia, opóźnienie, błędy i rozłączenie. Wyszukiwarkę i stan „Podłączone” sprawdzisz dopiero na sklepie widocznym z internetu pod `https`: uruchom tunel do portu 8888 (np. `cloudflared tunnel --url http://localhost:8888`), ustaw adres tunelu jako adres witryny (`npx @wordpress/env run cli wp option update home <adres>` i to samo dla `siteurl`), połącz wtyczkę od nowa i podłącz WooCommerce w panelu AsapChat (`sources.connect_url`). Szczegóły ograniczeń: kontrakt, punkt 7.
 
 ## 22. Teksty UI: angielski (źródło) i polski (tłumaczenie)
 

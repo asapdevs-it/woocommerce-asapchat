@@ -10,8 +10,9 @@
       "composer install",
       "vendor/bin/phpcs",
       "vendor/bin/phpunit",
-      "npx wp-env start",
-      "npx wp-env run cli wp plugin check asapchat"
+      "npm ci",
+      "npx @wordpress/env start",
+      "npx @wordpress/env run cli wp plugin check asapchat --exclude-directories=.ai,.github,docs,tests,vendor,node_modules"
     ]
   },
   "labels": {

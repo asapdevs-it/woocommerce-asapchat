@@ -53,9 +53,9 @@ Jako współpracownik repo masz prawo zapisu: tworzysz gałęzie, nadajesz etyki
 2. Powiedz agentowi: `/om-fix <numer issue na GitHubie>` (małe zadanie) albo `/om-auto-create-pr <numer issue na GitHubie>` (większe). Agent przypisze issue do Ciebie, doda `in-progress`, zrobi gałąź, kod, testy i PR.
 3. Przeczytaj cały diff, zanim poprosisz o review. Agent myli się pewnym tonem. Ty odpowiadasz za kod.
 4. Bramka walidacji (komendy z `.ai/agentic.config.json`) musi przejść lokalnie.
-5. PR do `main`. Pierwsze review robi drugi deweloper albo `/om-auto-review-pr <numer PR>`. Każdy PR zatwierdza na końcu Kamil (`prz10`): tego wymaga ochrona gałęzi `main` (plik `.github/CODEOWNERS`). Bez jego akceptacji merge jest zablokowany.
-6. PR z `needs-qa` czeka na `qa-approved`. Zmianę przeklikuje **drugi deweloper** (sprawdzacie nawzajem swoje PR) na lokalnym sklepie i dołącza zrzuty ekranu. Własnego PR nie testujesz sam, przy `risk-high` nie ma od tego wyjątków.
-7. Merge tylko przez squash. Gałąź `main` wymaga podpisanych commitów, a commit ze squasha podpisuje GitHub, więc swoich commitów nie musisz podpisywać.
+5. PR do `main`. Pierwsze review robi drugi deweloper (deweloperzy to `jakubix2000` i `WanSpi`) albo `/om-auto-review-pr <numer PR>`. Każdy PR zatwierdza na końcu Kamil (`prz10`): tego wymaga ochrona gałęzi `main` (plik `.github/CODEOWNERS`). Bez jego akceptacji merge jest zablokowany.
+6. PR z `needs-qa` czeka na `qa-approved`. Zmianę przeklikuje **drugi deweloper** na lokalnym sklepie i dołącza zrzuty ekranu: z pary `jakubix2000` i `WanSpi` QA robi ten, kto nie pisał PR. Jeśli nie może tego zrobić w ciągu dwóch dni roboczych, QA robi `prz10` (oznacz go w PR). Przy `risk-low` i `risk-medium` obowiązuje wyjątek z `SDLC.md` (self-QA z dowodami i etykietą `qa-self-verified`), gdy druga osoba nie ma czasu. Przy `risk-high` wyjątku nie ma: własnego PR nie testujesz sam.
+7. Merge robimy przez squash. To umowa zespołu, repo dopuszcza też inne tryby, więc wybierz „Squash and merge” ręcznie. Gałąź `main` wymaga podpisanych commitów, a commit ze squasha podpisuje GitHub, więc swoich commitów nie musisz podpisywać.
 8. W opisie PR wpisz `Closes #N` (numer issue na GitHubie, słowo po angielsku). Tylko wtedy GitHub zamknie issue przy merge.
 
 ## 5. Zasady, których nie łamiemy
