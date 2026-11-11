@@ -4,7 +4,7 @@ Czytasz to raz, pierwszego dnia. Potem pracujesz z issues.
 
 ## 1. Co budujemy
 
-Oficjalne darmowe wtyczki AsapChat dla platform sklepowych. Każda: łączy sklep z kontem AsapChat, wstawia skrypt czatu i wyszukiwarki, daje ustawienia (wygląd, wykluczenia, opóźnienie), pokazuje status i źródło zamówień oraz produktów. Pełny obraz ze wszystkimi mockami: strona planu. Link dostaniesz od Kamila.
+Oficjalne darmowe wtyczki AsapChat dla platform sklepowych. Każda: łączy sklep z kontem AsapChat, wstawia skrypt czatu i wyszukiwarki, daje ustawienia (wygląd, wykluczenia, opóźnienie), pokazuje status i źródło zamówień oraz produktów.
 
 Repozytoria (organizacja `asapdevs-it`), w kolejności prac:
 
@@ -17,7 +17,7 @@ Repozytoria (organizacja `asapdevs-it`), w kolejności prac:
 | później | `asapchat-shopify` | odłożone, nie zaczynamy |
 | później | `asapchat-magento` | odłożone, nie zaczynamy |
 
-Backend (`asapchat`) prowadzi Kamil. Kontrakt jest gotowy i opisany w `docs/CONNECT-API.md`. Nie masz dostępu do repo backendu i go nie potrzebujesz: punkt 7 kontraktu mówi, jak testować.
+Backend (`asapchat`) prowadzi Kamil. Kontrakt jest gotowy, działa na produkcji i jest opisany w `docs/CONNECT-API.md`. Nie masz dostępu do repo backendu i go nie potrzebujesz: punkt 7 kontraktu mówi, jak testować.
 
 Nie wysyłamy pytań do supportów platform. Spełniamy opublikowane wymagania i zgłaszamy darmową wtyczkę.
 
@@ -27,10 +27,10 @@ Nie wysyłamy pytań do supportów platform. Spełniamy opublikowane wymagania i
 2. `docs/CONNECT-API.md`: jak wtyczka rozmawia z AsapChat
 3. `.ai/specs/2026-11-11-connector-v1.md`: co dokładnie ma powstać
 4. `docs/mockups/*.html`: otwórz w przeglądarce, tak mają wyglądać ekrany
-5. `docs/marketplace-listing.md` i `docs/accounts.md`: wymagania katalogu i konta
-6. `AGENTS.md`, `SDLC.md`, `CODE_REVIEW.md`: zasady pracy
+5. `AGENTS.md`, `SDLC.md`, `CODE_REVIEW.md`: zasady pracy
+6. `docs/marketplace-listing.md` i `docs/accounts.md`: wymagania katalogu i konta (potrzebne dopiero pod koniec)
 
-Jeśli `README.md` podaje inną kolejność, obowiązuje ta stąd. `SDLC.md` jest wspólny dla wszystkich repo firmy i opisuje cały proces po angielsku. Wymienia skille (`om-...`), których nie musisz znać na start: wystarczą te z punktu 4. Wzmianki o `BACKWARD_COMPATIBILITY.md` i `.uxproof/` nie dotyczą repo wtyczek.
+`SDLC.md` jest wspólny dla wszystkich repo firmy i opisuje cały proces po angielsku. Wymienia skille (`om-...`), których nie musisz znać na start: wystarczą te z punktu 4. Wzmianki o `BACKWARD_COMPATIBILITY.md`, `.uxproof/` i `.ai/skills/` nie dotyczą repo wtyczek.
 
 ## 3. Narzędzia
 
@@ -42,28 +42,44 @@ Jeśli `README.md` podaje inną kolejność, obowiązuje ta stąd. `SDLC.md` jes
 npx skills add https://github.com/open-mercato/skills.git --skill '*'
 ```
 
-4. Sklonuj repo i otwórz w nim agenta. Agent sam czyta `AGENTS.md` i `.ai/agentic.config.json`.
+4. Narzędzia tego repo: Docker, Node 20, Composer 2 i PHP 8.1 lub nowszy. Do czego służą i jak postawić lokalny sklep: specyfikacja, punkt 21.
+5. Sklonuj repo i otwórz w nim agenta. Agent sam czyta `AGENTS.md` i `.ai/agentic.config.json`.
+
+Jako współpracownik repo masz prawo zapisu: tworzysz gałęzie, nadajesz etykiety, otwierasz PR. Do `main` nie da się pisać bezpośrednio.
 
 ## 4. Jak wygląda jedno zadanie
 
-1. Wybierz issue o najniższym numerze, które nie ma etykiety `in-progress` ani `blocked`. Issues są ułożone w kolejności wykonania.
-2. Powiedz agentowi: `/om-fix <numer issue>` (małe zadanie) albo `/om-auto-create-pr <numer issue>` (większe). Agent przypisze issue do Ciebie, doda `in-progress`, zrobi gałąź, kod, testy i PR.
+1. Wybierz zadanie o najniższym numerze **w tytule** (01, 02, ...), które nie ma etykiety `in-progress` i którego wszystkie zadania z sekcji „Zależności” są zmergowane. Numer issue na GitHubie (`#N`) nie wyznacza kolejności. Tabela zadań z zależnościami: specyfikacja, punkt 20.
+2. Powiedz agentowi: `/om-fix <numer issue na GitHubie>` (małe zadanie) albo `/om-auto-create-pr <numer issue na GitHubie>` (większe). Agent przypisze issue do Ciebie, doda `in-progress`, zrobi gałąź, kod, testy i PR.
 3. Przeczytaj cały diff, zanim poprosisz o review. Agent myli się pewnym tonem. Ty odpowiadasz za kod.
 4. Bramka walidacji (komendy z `.ai/agentic.config.json`) musi przejść lokalnie.
-5. PR do `main`. Review robi drugi deweloper albo `/om-auto-review-pr <numer PR>`. Zmiany z etykietą `risk-high` (połączenie, tokeny, podpisy) zawsze ogląda też Kamil (`prz10`).
-6. PR z `needs-qa` czeka na `qa-approved`: ktoś musi przeklikać zmianę w prawdziwym panelu sklepu i dołączyć zrzuty ekranu.
-7. Merge przez squash. Issue zamyka się słowem `zamyka #N` w opisie PR.
+5. PR do `main`. Pierwsze review robi drugi deweloper (deweloperzy to `jakubix2000` i `WanSpi`) albo `/om-auto-review-pr <numer PR>`. Każdy PR zatwierdza na końcu Kamil (`prz10`): tego wymaga ochrona gałęzi `main` (plik `.github/CODEOWNERS`). Bez jego akceptacji merge jest zablokowany.
+6. PR z `needs-qa` czeka na `qa-approved`. Zmianę przeklikuje **drugi deweloper** na lokalnym sklepie i dołącza zrzuty ekranu: z pary `jakubix2000` i `WanSpi` QA robi ten, kto nie pisał PR. Jeśli nie może tego zrobić w ciągu dwóch dni roboczych, QA robi `prz10` (oznacz go w PR). Przy `risk-low` i `risk-medium` obowiązuje wyjątek z `SDLC.md` (self-QA z dowodami i etykietą `qa-self-verified`), gdy druga osoba nie ma czasu. Przy `risk-high` wyjątku nie ma: własnego PR nie testujesz sam.
+7. Merge robimy przez squash. To umowa zespołu, repo dopuszcza też inne tryby, więc wybierz „Squash and merge” ręcznie. Gałąź `main` wymaga podpisanych commitów, a commit ze squasha podpisuje GitHub, więc swoich commitów nie musisz podpisywać.
+8. W opisie PR wpisz `Closes #N` (numer issue na GitHubie, słowo po angielsku). Tylko wtedy GitHub zamknie issue przy merge.
 
 ## 5. Zasady, których nie łamiemy
 
 - Zakres v1 to to, co jest w specu. Pomysł na coś więcej: nowe issue, nie dodatkowy kod w PR.
-- Żadnych sekretów w repo: tokenów, haseł, kluczy API, danych klientów. Dane dostępowe do kont wydawcy trzymamy w firmowym menedżerze haseł.
+- Żadnych sekretów w repo: tokenów, haseł, kluczy API, danych klientów. Dane dostępowe do kont wydawcy przekazujesz Kamilowi bezpośrednio, nigdy przez repo ani issue.
 - Żadnych endpointów diagnostycznych, które coś zwracają bez autoryzacji.
 - Gałąź `legacy` to archiwum starego prototypu. Nikt go nie używa, nie kopiujemy z niego niczego.
 - Ekrany wtyczki mają logo AsapChat i wygląd panelu AsapChat (tokeny w specu i mockach), nie natywny formularz platformy. Wyjątek: Shopify (Polaris).
 - Teksty dla użytkownika: po polsku forma „Ty”, bez pauz (znaku —), krótko. Wersja angielska obowiązkowa tam, gdzie wymaga jej katalog.
-- Zanim zaczniesz konto wydawcy na platformie, przeczytaj `docs/accounts.md`. Każde konto ma dać Kamilowi dostęp tak wcześnie, jak platforma pozwala. Jak dokładnie, mówi `docs/accounts.md`.
+- Zanim założysz konto wydawcy na platformie, przeczytaj `docs/accounts.md`. Każde konto ma dać Kamilowi dostęp tak wcześnie, jak platforma pozwala. Jak dokładnie, mówi `docs/accounts.md`.
 
 ## 6. Kiedy pytać
 
-Pytaj od razu, gdy: spec i mock mówią co innego, platforma wymaga czegoś, czego nie ma w specu, potrzebujesz zmiany w kontrakcie API, coś kosztuje (opłata za konto, płatna wtyczka do testów). Pytanie zadaj jako komentarz w issue i oznacz `prz10`.
+Spec i makieta mówią co innego: nie pytaj, obowiązuje reguła ze specyfikacji, punkt 4 (zachowanie i teksty ze specu, układ z makiety).
+
+Pytaj od razu, gdy: platforma wymaga czegoś, czego nie ma w specu, potrzebujesz zmiany w kontrakcie API (etykieta `needs-backend`), coś kosztuje (opłata za konto, płatna wtyczka do testów). Pytanie zadaj jako komentarz w issue i oznacz `prz10`.
+
+## 7. Od Kamila potrzebujesz
+
+Żadna z tych rzeczy nie blokuje zadań 01 do 12. Poproś o nie komentarzem w issue zadania 13 albo 14 (oznacz `prz10`), najlepiej tydzień wcześniej.
+
+| Co | Do czego | Kiedy |
+|---|---|---|
+| Potwierdzenie loginu konta wydawcy, gdy `asapcommerce` jest zajęty | loginu WordPress.org nie da się zmienić | przed zadaniem 14 |
+| Środowisko GitHub `release` z sekretami SVN | automatyczna publikacja po tagu `v*` | zadanie 14 |
+| Licencja płatnej wtyczki do testów (np. WP Rocket) | test nieobowiązkowy, bez licencji go pomijasz | zadanie 13 |
