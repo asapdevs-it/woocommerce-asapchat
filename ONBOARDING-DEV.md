@@ -61,7 +61,7 @@ Jako współpracownik repo masz prawo zapisu: tworzysz gałęzie, nadajesz etyki
 ## 5. Zasady, których nie łamiemy
 
 - Zakres v1 to to, co jest w specu. Pomysł na coś więcej: nowe issue, nie dodatkowy kod w PR.
-- Żadnych sekretów w repo: tokenów, haseł, kluczy API, danych klientów. Dane dostępowe do kont wydawcy trzymamy w firmowym menedżerze haseł (dostęp: punkt 7).
+- Żadnych sekretów w repo: tokenów, haseł, kluczy API, danych klientów. Dane dostępowe do kont wydawcy przekazujesz Kamilowi bezpośrednio, nigdy przez repo ani issue.
 - Żadnych endpointów diagnostycznych, które coś zwracają bez autoryzacji.
 - Gałąź `legacy` to archiwum starego prototypu. Nikt go nie używa, nie kopiujemy z niego niczego.
 - Ekrany wtyczki mają logo AsapChat i wygląd panelu AsapChat (tokeny w specu i mockach), nie natywny formularz platformy. Wyjątek: Shopify (Polaris).
@@ -80,8 +80,6 @@ Pytaj od razu, gdy: platforma wymaga czegoś, czego nie ma w specu, potrzebujesz
 
 | Co | Do czego | Kiedy |
 |---|---|---|
-| Adres e-mail w domenie firmy (albo alias przekierowany do Ciebie) | konto wydawcy na WordPress.org | przed zadaniem 14 |
-| Dostęp do firmowego menedżera haseł | zapis loginu, hasła, kodów 2FA i hasła SVN konta wydawcy | przed zadaniem 14 |
 | Potwierdzenie loginu konta wydawcy, gdy `asapcommerce` jest zajęty | loginu WordPress.org nie da się zmienić | przed zadaniem 14 |
 | Środowisko GitHub `release` z sekretami SVN | automatyczna publikacja po tagu `v*` | zadanie 14 |
 | Licencja płatnej wtyczki do testów (np. WP Rocket) | test nieobowiązkowy, bez licencji go pomijasz | zadanie 13 |
