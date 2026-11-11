@@ -5,15 +5,15 @@ Konto zakłada deweloper. Właścicielem wtyczki jest firma AsapCommerce, a Kami
 ## Zanim zaczniesz
 
 - **Adres e-mail.** Zespół WordPress.org rozpoznaje oficjalne wtyczki firm głównie po adresie e-mail w domenie firmy. Zgłoszenie wtyczki „AsapChat” z adresu Gmail zwykle kończy się pytaniem o prawo do marki i opóźnieniem. Dlatego:
-  1. Poproś Kamila o adres w domenie firmy (np. `imie@asapcommerce…` albo alias `plugins@…` przekierowany do Ciebie i do Kamila). To jest wariant zalecany.
+  1. Poproś Kamila o adres w domenie firmy albo alias przekierowany do Ciebie i do Kamila (jak i kiedy: `ONBOARDING-DEV.md`, punkt 7). To jest wariant zalecany.
   2. Jeśli zakładasz konto na prywatnym adresie, przed zgłoszeniem zmień e-mail konta na firmowy (Profil > Account) albo przygotuj się na pytanie reviewera i odpowiedz, wskazując stronę asapchat.io i osobę kontaktową z firmy.
 - **Jedno konto = jedna wtyczka w kolejce.** Nie zgłaszaj z tego konta niczego innego w trakcie review.
-- **Hasła.** Login, hasło, kody zapasowe 2FA i hasło SVN zapisz w firmowym menedżerze haseł, we wpisie udostępnionym Kamilowi. Nigdy w repo, w issue ani na czacie.
+- **Hasła.** Login, hasło, kody zapasowe 2FA i hasło SVN zapisz w firmowym menedżerze haseł, we wpisie udostępnionym Kamilowi (dostęp do menedżera: `ONBOARDING-DEV.md`, punkt 7). Nigdy w repo, w issue ani na czacie.
 
 ## Kroki
 
 1. Wejdź na https://login.wordpress.org/register i załóż konto.
-   - Username: `asapcommerce` (to będzie widoczny „Contributor” i login do SVN; nie da się go zmienić).
+   - Username: `asapcommerce` (to będzie widoczny „Contributor” i login do SVN; nie da się go zmienić). Gdy jest zajęty, nie wymyślaj innego sam: ustal go z Kamilem przed rejestracją.
    - E-mail: firmowy (patrz wyżej).
 2. Potwierdź e-mail linkiem z wiadomości.
 3. Włącz 2FA (uwierzytelnianie dwuskładnikowe, obowiązkowe dla właścicieli i committerów wtyczek): https://profiles.wordpress.org/me/profile/edit/group/3/?screen=two-factor . Użyj aplikacji typu Authenticator. Zapisz kody zapasowe w menedżerze haseł.
@@ -34,7 +34,7 @@ Jeśli wtyczka została zgłoszona z niewłaściwego konta, nie zgłaszaj jej po
 
 ## Sekrety w GitHubie
 
-W repo, w środowisku `release` (Settings > Environments), właściciel ustawia `SVN_USERNAME` i `SVN_PASSWORD`. Deweloper nie potrzebuje do nich wglądu: wydanie uruchamia tag `v*`, a zatwierdza je właściciel.
+Środowisko `release` (Settings > Environments) zakłada właściciel repo i ustawia w nim `SVN_USERNAME` i `SVN_PASSWORD` (poproś o to w zadaniu 14, `ONBOARDING-DEV.md`, punkt 7). Deweloper nie potrzebuje do nich wglądu: wydanie uruchamia tag `v*`, a zatwierdza je właściciel.
 
 ## Checklista
 

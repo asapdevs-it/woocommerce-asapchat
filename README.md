@@ -28,21 +28,22 @@ Miejsce publikacji: katalog wtyczek WordPress.org. Slug (stały identyfikator w 
 
 ## Status
 
-- Kontrakt z AsapChat jest gotowy: `docs/CONNECT-API.md`. Punkt 7 mówi, jak założyć konto testowe i postawić lokalny sklep.
-- Lista zadań w kolejności wykonania: ostatni punkt specyfikacji („Issues”).
-- Gałąź `legacy` to archiwum. Nie kopiuj z niej kodu.
+- Kontrakt z AsapChat jest gotowy i działa na produkcji: `docs/CONNECT-API.md`. Punkt 7 mówi, jak założyć konto testowe i co da się sprawdzić na `localhost`.
+- Lokalny sklep krok po kroku (`wp-env`, WooCommerce, dane przykładowe): specyfikacja, punkt 21.4.
+- Lista zadań: specyfikacja, punkt 20. Kolejność wyznacza numer w tytule zadania (01 do 14), nie numer issue na GitHubie.
+- Na `main` leży jeszcze stary prototyp (`admin/`, `includes/`, `public/`, `woocommerce-asapchat.php`). Usuwa go zadanie 01. Nie dopisuj do niego i nie kopiuj z niego kodu.
+- Gałąź `legacy` to archiwum tego prototypu, gałąź `master` to stara pozostałość. Obie ignoruj.
+- To repozytorium jest publiczne. Nie wpisuj tu niczego wewnętrznego: haseł, danych klientów, adresów prywatnych systemów.
 
 ## Zacznij tutaj (kolejność czytania)
 
-1. `ONBOARDING-DEV.md`: jak ustawić narzędzia i jak wygląda praca z issue i PR.
-2. `SDLC.md`: proces od zadania do zmergowanego PR.
-3. `docs/CONNECT-API.md`: kontrakt z AsapChat. Przeczytaj cały.
-4. `.ai/specs/2026-11-11-connector-v1.md`: pełna specyfikacja wtyczki i lista issues.
-5. `docs/mockups/settings.html`: makieta ekranu ustawień (otwórz w przeglądarce, przełącz stan u góry).
-6. `AGENTS.md`: reguły dla agenta AI i dla Ciebie.
-7. `docs/accounts.md`: konto wydawcy na WordPress.org.
-8. `docs/marketplace-listing.md`: teksty i grafiki do katalogu, checklista zgłoszenia.
-9. Issues w tym repo, w kolejności numerów.
+1. `ONBOARDING-DEV.md`: jak ustawić narzędzia i jak wygląda praca z zadaniem i PR.
+2. `docs/CONNECT-API.md`: kontrakt z AsapChat. Przeczytaj cały.
+3. `.ai/specs/2026-11-11-connector-v1.md`: pełna specyfikacja wtyczki, lista zadań (punkt 20), narzędzia i lokalny sklep (punkt 21), teksty EN i PL (punkt 22).
+4. `docs/mockups/settings.html`: makieta ekranu ustawień (otwórz w przeglądarce, przełącz stan u góry).
+5. `AGENTS.md`, `SDLC.md`, `CODE_REVIEW.md`: reguły dla agenta AI i dla Ciebie, proces od zadania do zmergowanego PR.
+6. `docs/marketplace-listing.md` i `docs/accounts.md`: teksty i grafiki do katalogu, konto wydawcy. Potrzebne dopiero w zadaniach 13 i 14.
+7. Issues w tym repo, w kolejności numeru z tytułu (01, 02, ...).
 
 ## Linki
 

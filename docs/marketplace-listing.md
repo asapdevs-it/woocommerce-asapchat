@@ -128,17 +128,17 @@ Nothing is sent before you click "Connect to AsapChat" or submit an install key.
 3. Saving the look (when you click Save and a look field has changed):
    the plugin sends the connection token, your site URL and the changed values (assistant name, color, position, greetings) to https://panel.asapchat.io/api/plugin/v1/settings.
 4. On your storefront (on every page where the widgets are enabled and not excluded):
-   the visitor's browser loads the chat script and the search script from the addresses returned by the service (ADDRESSES). These scripts communicate with https://panel.asapchat.io to deliver chat messages and search results. Messages typed by the visitor and search queries are sent to the service.
+   the visitor's browser loads the chat script and the search script from https://asapchat.io. These scripts communicate with https://panel.asapchat.io to deliver chat messages and search results. Messages typed by the visitor and search queries are sent to the service.
 
 The plugin does not send your orders, products or WooCommerce API keys anywhere.
 
 Terms of service: https://asapchat.io/regulamin
-Privacy policy: https://asapchat.io/privacy-policy (Polish: https://asapchat.io/polityka-prywatnosci)
+Privacy policy: https://asapchat.io/polityka-prywatnosci
 ```
 
 Przed zgłoszeniem:
 
-- [ ] W miejsce `ADDRESSES` wpisz faktyczne hosty z `chat.src` i `search.src` oraz wszystkie hosty, z którymi rozmawiają widgety (narzędzia deweloperskie przeglądarki, karta Sieć).
+- [ ] Otwórz sklep z włączonymi widgetami i sprawdź w narzędziach deweloperskich przeglądarki (karta Sieć), z jakimi hostami rozmawiają widgety. Oczekiwane: `asapchat.io` (skrypty) i `panel.asapchat.io` (API). Każdy inny host dopisz do tekstu wyżej.
 - [ ] Adresy regulaminu i polityki prywatności odpowiadają kodem 200.
 
 ## 8. Szkic `readme.txt`
@@ -149,8 +149,8 @@ Plik musi nazywać się dokładnie `readme.txt` (małe litery). Walidator: https
 === AsapChat: AI Chat and Product Search ===
 Contributors: asapcommerce
 Tags: live chat, ai chatbot, product search, woocommerce, customer support
-Requires at least: 6.5
-Tested up to: 6.9
+Requires at least: X.Y
+Tested up to: X.Y
 Requires PHP: 7.4
 Stable tag: 1.0.0
 License: GPLv2 or later
@@ -195,7 +195,7 @@ Connect your site to AsapChat in one click: AI chat that answers customers and a
 
 Na końcu `readme.txt` dopisz też informację o foncie: `Open Sans, SIL Open Font License 1.1, bundled in admin/fonts/`.
 
-Uwagi: `Contributors` to login konta WordPress.org. `Tested up to` to tylko numer wersji głównej, aktualny w dniu wydania. `Requires at least` ustawiamy na „najnowsza minus 2” w dniu wydania. `Stable tag` nigdy `trunk`.
+Uwagi: `X.Y` w szkicu to miejsca do wypełnienia w dniu wydania, nie kopiuj ich dosłownie. `Contributors` to login konta WordPress.org. `Tested up to` to tylko numer wersji głównej, aktualny w dniu wydania. `Requires at least` ustawiamy na „najnowsza minus 2” w dniu wydania. `Stable tag` nigdy `trunk`.
 
 ## 9. Grafiki (katalog `.wordpress-org/` w repo, w SVN trafiają do `/assets/`, nie do `trunk`)
 
@@ -209,10 +209,10 @@ Uwagi: `Contributors` to login konta WordPress.org. `Tested up to` to tylko nume
 | `screenshot-2.png` | np. 1280 x 800 | 10 MB | stan „Połączony”: nagłówek, status, widgety |
 | `screenshot-3.png` | np. 1280 x 800 | 10 MB | sekcje „Wygląd” i „Gdzie pokazywać” |
 | `screenshot-4.png` | np. 1280 x 800 | 10 MB | sekcja „Źródło zamówień i produktów” |
-| `screenshot-5.png` | np. 1280 x 800 | 10 MB | czat na sklepie demo |
-| `screenshot-6.png` | np. 1280 x 800 | 10 MB | wyniki wyszukiwarki na sklepie demo |
+| `screenshot-5.png` | np. 1280 x 800 | 10 MB | czat na Twoim sklepie testowym (dane przykładowe WooCommerce, motyw Storefront) |
+| `screenshot-6.png` | np. 1280 x 800 | 10 MB | wyniki wyszukiwarki na Twoim sklepie testowym wystawionym pod `https` (specyfikacja, punkt 21.4) |
 
-Numer w nazwie pliku odpowiada numerowi linii w sekcji `== Screenshots ==`. Nazwy plików małymi literami. Na zrzutach żadnych danych prawdziwych klientów. Logo: pliki SVG `asapchat-logo-white.svg` (na ciemne tło) i `asapchat-logo-dark.svg`.
+Numer w nazwie pliku odpowiada numerowi linii w sekcji `== Screenshots ==`. Nazwy plików małymi literami. Na zrzutach żadnych danych prawdziwych klientów. Logo: pliki SVG w repo, `admin/img/asapchat-logo-white.svg` (na ciemne tło) i `admin/img/asapchat-logo-dark.svg` (na jasne). Bannery i ikony budujesz z nich sam w dowolnym edytorze grafiki: banner to logo i hasło z krótkiego opisu na tle `#161616` albo `#6543f0`, ikona to sam znak (pierwszy element logo, bez napisu) na tle `#6543f0`. Gotowych plików PNG nie ma.
 
 ## 10. Wymagania platformy (checklista przed zgłoszeniem)
 
@@ -233,7 +233,7 @@ Numer w nazwie pliku odpowiada numerowi linii w sekcji `== Screenshots ==`. Nazw
 - [ ] Sanityzacja wejścia, escapowanie wyjścia, nonce, sprawdzenie uprawnień.
 - [ ] `wp_remote_*` zamiast cURL, brak składni HEREDOC.
 - [ ] Plugin Check: zero błędów w kategorii „Plugin Repo”.
-- [ ] Zip < 10 MB, bez plików deweloperskich.
+- [ ] Zip poniżej 1 MB (limit katalogu to 10 MB, nasz cel jest ostrzejszy), bez plików deweloperskich.
 - [ ] Deklaracja HPOS, nagłówek `WC tested up to`.
 - [ ] Konto zgłaszające ma 2FA.
 

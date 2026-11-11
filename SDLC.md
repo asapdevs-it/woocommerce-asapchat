@@ -120,10 +120,11 @@ The `om-auto-*` skills run this process unattended and are chainable: each accep
 
 Every PR passes the full validation gate before review sign-off, in this order:
 
-- `composer install                      # tylko narzędzia dev`
-- `vendor/bin/phpcs                      # standard WordPress + PHPCompatibilityWP`
+- `composer install`
+- `vendor/bin/phpcs`
 - `vendor/bin/phpunit`
-- `npx wp-env start && npx wp-env run cli wp plugin check asapchat`
+- `npx wp-env start`
+- `npx wp-env run cli wp plugin check asapchat`
 
 Any non-zero exit fails the gate and blocks the PR. The implementing skills run the gate before opening a PR, and `om-check-and-commit` runs it before pushing a hand-worked branch. The command list lives in `.ai/agentic.config.json`; when it changes, update it there and in this section together.
 

@@ -7,10 +7,11 @@
   },
   "validation": {
     "commands": [
-      "composer install                      # tylko narzędzia dev",
-      "vendor/bin/phpcs                      # standard WordPress + PHPCompatibilityWP",
+      "composer install",
+      "vendor/bin/phpcs",
       "vendor/bin/phpunit",
-      "npx wp-env start && npx wp-env run cli wp plugin check asapchat"
+      "npx wp-env start",
+      "npx wp-env run cli wp plugin check asapchat"
     ]
   },
   "labels": {
@@ -72,6 +73,9 @@
   },
   "reviewChecklist": null,
   "closeKeywords": [
+    "closes",
+    "fixes",
+    "resolves",
     "zamyka",
     "naprawia",
     "rozwiązuje"
