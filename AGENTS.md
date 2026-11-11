@@ -33,7 +33,7 @@ Stare pliki prototypu na `main` usuwa issue 1. Nie dopisuj nic do nich.
 2. Każdy plik PHP zaczyna się od `defined( 'ABSPATH' ) || exit;`.
 3. Wejście: `sanitize_text_field`, `esc_url_raw`, `absint`. Wyjście: `esc_html`, `esc_attr`, `esc_url`. Bez wyjątków.
 4. Każda akcja w panelu: `check_admin_referer()` (nonce, czyli jednorazowy żeton chroniący przed CSRF) i `current_user_can( 'manage_options' )`.
-5. HTTP tylko przez `wp_remote_get/post/request`, timeout 10 s. Nigdy cURL.
+5. HTTP tylko przez `wp_remote_get/post/request`, timeout 5 s. Nigdy cURL.
 6. Skrypty przez `wp_enqueue_script` + filtr `script_loader_tag`, który składa tag z atrybutów z configu. Nigdy `echo '<script>'` w `wp_head`.
 7. **Żadnego połączenia z asapchat.io przed kliknięciem „Połącz” lub wklejeniem klucza.** Świeżo aktywowana wtyczka nie wysyła niczego.
 8. Żadnych iframe w panelu admina. Połączenie to przekierowanie całej karty.
