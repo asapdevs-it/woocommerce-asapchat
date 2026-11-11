@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Makieta: WordPress, Ustawienia AsapChat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap">
+<style>
+/* Korzeń i otoczenie WordPressa (menu boczne, górna belka). */
+.mk-wp{--wp-blue:#2271b1;--wp-dark:#1d2327;--wp-dark2:#2c3338;--wp-bg:#f0f0f1;--wp-line:#c3c4c7;--wp-muted:#50575e;--ac-bg:#fafafa;--ac-line:#e9eaeb;--ac-text:#161616;--ac-label:#424448;--ac-desc:#56595f;--ac-accent:#6543f0;--ac-tint:#f6f4fe;--ac-soft:#ece8fd;--ac-field:#d5d7da;--ac-green:#05c732;--ac-grey:#a4a7ae;--ac-red:#d92d20;container-type:inline-size;font:13px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;color:#1d2327;background:#fff;border:1px solid var(--wp-line);border-radius:6px;overflow:hidden;text-align:left}
+.mk-wp *{box-sizing:border-box}
+.mk-wp .mk-wp-radio{position:absolute;opacity:0;pointer-events:none}
+.mk-wp .mk-wp-switcher{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 10px;background:#fff;border-bottom:1px solid var(--wp-line)}
+.mk-wp .mk-wp-switcher span{color:var(--wp-muted);margin-right:4px}
+.mk-wp .mk-wp-switcher label{padding:4px 10px;border:1px solid var(--wp-line);border-radius:999px;cursor:pointer;background:#f6f7f7;color:#1d2327}
+.mk-wp #mk-wp-s1:checked ~ .mk-wp-switcher label[for="mk-wp-s1"],
+.mk-wp #mk-wp-s2:checked ~ .mk-wp-switcher label[for="mk-wp-s2"],
+.mk-wp #mk-wp-s3:checked ~ .mk-wp-switcher label[for="mk-wp-s3"],
+.mk-wp #mk-wp-s4:checked ~ .mk-wp-switcher label[for="mk-wp-s4"]{background:var(--wp-dark);border-color:var(--wp-dark);color:#fff}
+.mk-wp .mk-wp-radio:focus-visible ~ .mk-wp-switcher{outline:2px solid var(--wp-blue);outline-offset:-2px}
+.mk-wp .mk-wp-bar{height:32px;background:var(--wp-dark);color:#c3c4c7;display:flex;align-items:center;gap:16px;padding:0 12px;font-size:13px}
+.mk-wp .mk-wp-bar b{color:#fff;font-weight:600}
+.mk-wp .mk-wp-bar .mk-wp-right{margin-left:auto}
+.mk-wp .mk-wp-body{display:flex;background:var(--wp-bg);min-height:620px}
+.mk-wp .mk-wp-side{width:160px;flex:none;background:var(--wp-dark);color:#f0f0f1;padding:8px 0}
+.mk-wp .mk-wp-side div{padding:7px 12px;font-size:14px}
+.mk-wp .mk-wp-side .mk-wp-cur{background:var(--wp-blue);color:#fff;font-weight:600}
+.mk-wp .mk-wp-side .mk-wp-sub{background:var(--wp-dark2);padding:6px 12px;font-size:13px;color:#c3c4c7}
+.mk-wp .mk-wp-side .mk-wp-sub.mk-wp-on{color:#fff;font-weight:600}
+.mk-wp .mk-wp-main{flex:1;min-width:0;padding:20px 20px 28px}
+
+/* Ekran wtyczki w stylu AsapChat. W kodzie wtyczki te same reguły mają prefiks asapchat- i korzeń .asapchat-screen. */
+.mk-wp .mk-wp-app{background:var(--ac-bg);border:1px solid var(--ac-line);border-radius:16px;overflow:hidden;color:var(--ac-text);font:400 14px/1.55 "Open Sans",-apple-system,"Segoe UI",Roboto,sans-serif;max-width:960px;margin:0 auto}
+.mk-wp .mk-wp-app p{margin:0}
+.mk-wp .mk-wp-head{background:#161616;border-bottom:4px solid var(--ac-accent);padding:14px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.mk-wp .mk-wp-logo{display:block;line-height:0}
+.mk-wp .mk-wp-logo svg{display:block;height:30px;width:auto}
+.mk-wp .mk-wp-headact{margin-left:auto;display:none;flex-wrap:wrap;align-items:center;gap:8px 18px}
+.mk-wp #mk-wp-s2:checked ~ .mk-wp-body .mk-wp-headact,
+.mk-wp #mk-wp-s4:checked ~ .mk-wp-body .mk-wp-headact{display:flex}
+.mk-wp .mk-wp-headlink{color:#fff;font-weight:600;font-size:14px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.mk-wp .mk-wp-headbtn{color:#fff;font-weight:600;font-size:14px;border:1px solid rgba(255,255,255,.4);border-radius:10px;padding:7px 14px;cursor:pointer}
+.mk-wp .mk-wp-wrap{padding:28px 24px 32px}
+.mk-wp .mk-wp-panel{display:none}
+.mk-wp #mk-wp-s1:checked ~ .mk-wp-body .mk-wp-p1,
+.mk-wp #mk-wp-s2:checked ~ .mk-wp-body .mk-wp-p2,
+.mk-wp #mk-wp-s4:checked ~ .mk-wp-body .mk-wp-p2,
+.mk-wp #mk-wp-s3:checked ~ .mk-wp-body .mk-wp-p3{display:block}
+.mk-wp .mk-wp-body .mk-wp-only4,.mk-wp .mk-wp-body .mk-wp-not4{display:none}
+.mk-wp #mk-wp-s4:checked ~ .mk-wp-body .mk-wp-only4,
+.mk-wp #mk-wp-s2:checked ~ .mk-wp-body .mk-wp-not4{display:block}
+.mk-wp #mk-wp-s4:checked ~ .mk-wp-body .mk-wp-item.mk-wp-only4,
+.mk-wp #mk-wp-s2:checked ~ .mk-wp-body .mk-wp-item.mk-wp-not4{display:flex}
+.mk-wp #mk-wp-s4:checked ~ .mk-wp-body .mk-wp-pill.mk-wp-only4,
+.mk-wp #mk-wp-s2:checked ~ .mk-wp-body .mk-wp-pill.mk-wp-not4{display:inline-flex}
+
+.mk-wp .mk-wp-h1{font-size:30px;line-height:1.2;font-weight:800;letter-spacing:-.02em;margin:0;overflow-wrap:anywhere}
+.mk-wp .mk-wp-lead{font-size:15px;color:var(--ac-desc);margin-top:8px}
+.mk-wp .mk-wp-title{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:20px}
+.mk-wp .mk-wp-title .mk-wp-domain{flex-basis:100%;font-size:13px;color:var(--ac-desc)}
+.mk-wp .mk-wp-card{background:#fff;border:1px solid var(--ac-line);border-radius:16px;box-shadow:0 6px 20px rgba(15,26,23,.05);padding:24px;margin-bottom:16px}
+.mk-wp .mk-wp-card h2{font-size:18px;line-height:1.3;font-weight:800;margin:0 0 4px}
+.mk-wp .mk-wp-desc{font-size:13px;color:var(--ac-desc)}
+.mk-wp .mk-wp-card > .mk-wp-desc{margin-bottom:16px}
+.mk-wp .mk-wp-link{color:var(--ac-accent);font-weight:600;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.mk-wp .mk-wp-narrow{max-width:560px;margin:8px auto 0}
+
+.mk-wp .mk-wp-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border:1px solid var(--ac-field);border-radius:10px;background:#fff;color:var(--ac-text);font-size:14px;font-weight:600;line-height:1.2;font-family:inherit;cursor:pointer;text-align:center}
+.mk-wp .mk-wp-btn.mk-wp-primary{min-height:48px;padding:0 24px;border-color:var(--ac-accent);background:var(--ac-accent);color:#fff;font-size:15px;font-weight:700}
+.mk-wp .mk-wp-btn.mk-wp-wide{width:100%}
+.mk-wp .mk-wp-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+.mk-wp .mk-wp-pill{display:inline-flex;align-items:center;gap:7px;padding:4px 12px;border-radius:999px;background:#f5f5f5;color:var(--ac-label);font-size:13px;font-weight:600;white-space:nowrap}
+.mk-wp .mk-wp-pill::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ac-grey);flex:none}
+.mk-wp .mk-wp-pill.mk-wp-ok{background:#eafbee;color:#0a6b22}
+.mk-wp .mk-wp-pill.mk-wp-ok::before{background:var(--ac-green)}
+.mk-wp .mk-wp-pill.mk-wp-plan{background:var(--ac-soft);color:#4a2fc4}
+.mk-wp .mk-wp-pill.mk-wp-plan::before{display:none}
+
+.mk-wp .mk-wp-notice{display:flex;gap:12px;align-items:flex-start;background:#eafbee;border:1px solid #bfeecb;border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:14px}
+.mk-wp .mk-wp-notice.mk-wp-err{background:#fef3f2;border-color:#fecdca}
+.mk-wp .mk-wp-notice.mk-wp-info{background:var(--ac-tint);border-color:var(--ac-soft)}
+.mk-wp .mk-wp-notice .mk-wp-x{margin-left:auto;color:var(--ac-desc);cursor:pointer;font-size:18px;line-height:1}
+
+/* Lista wierszy: status, przełączniki, źródła */
+.mk-wp .mk-wp-item{display:flex;align-items:center;gap:8px 16px;padding:14px 0;border-top:1px solid var(--ac-line)}
+.mk-wp .mk-wp-list{margin-bottom:-14px}
+.mk-wp .mk-wp-item .mk-wp-txt{flex:1;min-width:0}
+.mk-wp .mk-wp-item b{display:block;font-size:15px;font-weight:700;color:var(--ac-text)}
+.mk-wp .mk-wp-toggle{position:absolute;opacity:0}
+.mk-wp .mk-wp-sw{flex:none;width:44px;height:24px;border-radius:12px;background:var(--ac-field);position:relative;cursor:pointer;display:block;transition:background .15s}
+.mk-wp .mk-wp-sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:left .15s}
+.mk-wp .mk-wp-toggle:checked + .mk-wp-sw{background:var(--ac-accent)}
+.mk-wp .mk-wp-toggle:checked + .mk-wp-sw::after{left:23px}
+.mk-wp .mk-wp-toggle:focus-visible + .mk-wp-sw{box-shadow:0 0 0 3px rgba(101,67,240,.2);outline:1px solid var(--ac-accent)}
+.mk-wp .mk-wp-toggle:disabled + .mk-wp-sw{background:#eeeff0;cursor:not-allowed}
+.mk-wp .mk-wp-item.mk-wp-off b{color:var(--ac-grey)}
+
+/* Pola formularza */
+.mk-wp .mk-wp-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 20px}
+.mk-wp .mk-wp-full{grid-column:1 / -1}
+.mk-wp .mk-wp-field{display:block;min-width:0}
+.mk-wp .mk-wp-label{display:flex;justify-content:space-between;gap:8px;font-size:14px;font-weight:600;color:var(--ac-label);margin-bottom:6px}
+.mk-wp .mk-wp-label small{font-size:12px;font-weight:400;color:var(--ac-desc)}
+.mk-wp .mk-wp-input{display:block;width:100%;height:44px;border:1px solid var(--ac-field);border-radius:10px;padding:0 12px;background:#fff;color:var(--ac-text);font-size:14px;font-weight:400;line-height:1.4;font-family:inherit;margin:0}
+.mk-wp textarea.mk-wp-input{height:auto;min-height:88px;padding:10px 12px;resize:vertical}
+.mk-wp .mk-wp-input:focus,.mk-wp .mk-wp-btn:focus-visible,.mk-wp .mk-wp-chips:focus-within{outline:0;border-color:var(--ac-accent);box-shadow:0 0 0 3px rgba(101,67,240,.2)}
+.mk-wp .mk-wp-field .mk-wp-desc{margin-top:6px}
+.mk-wp .mk-wp-color{display:flex;gap:8px}
+.mk-wp .mk-wp-color input[type=color]{flex:none;width:44px;height:44px;padding:3px;border:1px solid var(--ac-field);border-radius:10px;background:#fff;cursor:pointer}
+.mk-wp .mk-wp-seg{display:flex;border:1px solid var(--ac-field);border-radius:10px;overflow:hidden;height:44px}
+.mk-wp .mk-wp-seg input{position:absolute;opacity:0}
+.mk-wp .mk-wp-seg label{flex:1;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--ac-label);cursor:pointer;padding:0 8px;text-align:center}
+.mk-wp .mk-wp-seg label + input + label{border-left:1px solid var(--ac-field)}
+.mk-wp .mk-wp-seg input:checked + label{background:var(--ac-tint);color:var(--ac-accent)}
+.mk-wp .mk-wp-seg input:focus-visible + label{box-shadow:inset 0 0 0 2px var(--ac-accent)}
+.mk-wp .mk-wp-unit{display:flex;align-items:center;gap:10px}
+.mk-wp .mk-wp-unit .mk-wp-input{width:96px}
+.mk-wp .mk-wp-chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:44px;border:1px solid var(--ac-field);border-radius:10px;padding:6px 8px;background:#fff}
+.mk-wp .mk-wp-chip{display:inline-flex;align-items:center;gap:6px;background:var(--ac-soft);color:#3a2399;border-radius:8px;padding:4px 10px;font-size:13px;font-weight:600}
+.mk-wp .mk-wp-chip i{font-style:normal;cursor:pointer;opacity:.7}
+.mk-wp .mk-wp-chips input{flex:1;min-width:120px;border:0;outline:0;height:28px;font-size:14px;font-weight:400;line-height:1;font-family:inherit;background:transparent;color:var(--ac-text)}
+
+/* Rozwijane bloki */
+.mk-wp .mk-wp-more{margin-top:16px;border-top:1px solid var(--ac-line);padding-top:14px}
+.mk-wp .mk-wp-more summary{cursor:pointer;font-weight:600;color:var(--ac-accent);font-size:14px}
+.mk-wp .mk-wp-more summary:focus-visible{outline:2px solid var(--ac-accent);outline-offset:3px;border-radius:4px}
+.mk-wp .mk-wp-more ol{margin:12px 0 0;padding-left:20px;color:var(--ac-label)}
+.mk-wp .mk-wp-more li{margin-bottom:6px}
+.mk-wp .mk-wp-more .mk-wp-keyrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.mk-wp .mk-wp-more .mk-wp-keyrow .mk-wp-input{flex:1;min-width:180px;font-family:ui-monospace,Menlo,Consolas,monospace}
+.mk-wp .mk-wp-more .mk-wp-desc{margin-top:8px}
+
+.mk-wp .mk-wp-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px;padding:0;list-style:none;counter-reset:mkwp}
+.mk-wp .mk-wp-steps li{counter-increment:mkwp;background:var(--ac-tint);border-radius:10px;padding:12px;font-size:13px;color:var(--ac-label)}
+.mk-wp .mk-wp-steps li::before{content:counter(mkwp);display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--ac-accent);color:#fff;font-weight:700;font-size:13px;margin-bottom:8px}
+.mk-wp .mk-wp-center{text-align:center}
+.mk-wp .mk-wp-save{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:20px}
+.mk-wp .mk-wp-memo{max-width:960px;margin:14px auto 0;padding:10px 14px;border:1px dashed var(--wp-line);border-radius:6px;color:var(--wp-muted);background:#fff}
+
+@container (max-width:720px){
+.mk-wp .mk-wp-side{display:none}
+.mk-wp .mk-wp-main{padding:10px 10px 20px}
+.mk-wp .mk-wp-bar .mk-wp-hide{display:none}
+.mk-wp .mk-wp-head{padding:12px 16px}
+.mk-wp .mk-wp-logo svg{height:26px}
+.mk-wp .mk-wp-headact{margin-left:0;flex-basis:100%;justify-content:space-between}
+.mk-wp .mk-wp-wrap{padding:20px 12px 24px}
+.mk-wp .mk-wp-h1{font-size:24px}
+.mk-wp .mk-wp-card{padding:16px}
+.mk-wp .mk-wp-grid{grid-template-columns:1fr}
+.mk-wp .mk-wp-steps{grid-template-columns:1fr}
+.mk-wp .mk-wp-item.mk-wp-stat{flex-wrap:wrap}
+.mk-wp .mk-wp-item.mk-wp-stat .mk-wp-txt{flex-basis:100%}
+.mk-wp .mk-wp-save .mk-wp-btn{width:100%}
+.mk-wp .mk-wp-row .mk-wp-btn{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="mk-wp">
+  <input class="mk-wp-radio" type="radio" name="mk-wp-state" id="mk-wp-s1" checked>
+  <input class="mk-wp-radio" type="radio" name="mk-wp-state" id="mk-wp-s2">
+  <input class="mk-wp-radio" type="radio" name="mk-wp-state" id="mk-wp-s4">
+  <input class="mk-wp-radio" type="radio" name="mk-wp-state" id="mk-wp-s3">
+  <div class="mk-wp-switcher">
+    <span>Stan makiety:</span>
+    <label for="mk-wp-s1">Niepołączony</label>
+    <label for="mk-wp-s2">Połączony</label>
+    <label for="mk-wp-s4">Połączony, bez produktów</label>
+    <label for="mk-wp-s3">Błąd, połącz ponownie</label>
+  </div>
+  <div class="mk-wp-bar"><b>W</b><span>Sklep Zielony Parapet</span><span class="mk-wp-hide">+ Utwórz</span><span class="mk-wp-right">Witaj, admin</span></div>
+  <div class="mk-wp-body">
+    <div class="mk-wp-side">
+      <div>Kokpit</div><div>Wpisy</div><div>Media</div><div>Strony</div><div>WooCommerce</div><div>Produkty</div><div>Wygląd</div><div>Wtyczki</div>
+      <div class="mk-wp-cur">Ustawienia</div>
+      <div class="mk-wp-sub">Ogólne</div><div class="mk-wp-sub">Czytanie</div><div class="mk-wp-sub">Bezpośrednie odnośniki</div><div class="mk-wp-sub mk-wp-on">AsapChat</div>
+    </div>
+    <div class="mk-wp-main">
+      <div class="mk-wp-app">
+
+        <!-- NAGŁÓWEK EKRANU: wspólny dla wszystkich stanów -->
+        <div class="mk-wp-head">
+          <span class="mk-wp-logo" role="img" aria-label="AsapChat"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="249" height="52" viewBox="0 0 249 52" fill="none"><path d="M59.12 37H52.2L63.44 10H68.92L80.2 37H73.28L71.56 32.76H60.84L59.12 37ZM66.24 19.44L63.2 26.88H69.2L66.24 19.44ZM95.8116 23.6L90.3316 24.48C90.1182 23.6267 89.3849 23.2 88.1316 23.2C87.0916 23.2 86.5716 23.4667 86.5716 24C86.5716 24.3733 86.9716 24.68 87.7716 24.92L90.5316 25.76C92.5316 26.3467 93.9582 27.08 94.8116 27.96C95.6649 28.84 96.0916 30 96.0916 31.44C96.0916 33.36 95.4116 34.84 94.0516 35.88C92.6916 36.8933 90.7982 37.4 88.3716 37.4C83.5716 37.4 80.9182 35.5733 80.4116 31.92L85.8916 31.16C86.1849 32.12 87.0516 32.6 88.4916 32.6C89.7182 32.6 90.3316 32.32 90.3316 31.76C90.3316 31.3333 89.7849 30.9733 88.6916 30.68L85.8516 29.92C84.0382 29.4933 82.7182 28.8533 81.8916 28C81.0916 27.1467 80.6916 25.9867 80.6916 24.52C80.6916 22.52 81.3582 21.04 82.6916 20.08C84.0249 19.0933 85.8782 18.6 88.2516 18.6C90.4916 18.6 92.2516 19.04 93.5316 19.92C94.8382 20.7733 95.5982 22 95.8116 23.6ZM105.608 18.6C107.208 18.6 108.701 19.0667 110.088 20V19H116.128V37H110.088V36C108.701 36.9333 107.208 37.4 105.608 37.4C103.261 37.4 101.288 36.5067 99.6875 34.72C98.1142 32.9067 97.3275 30.6667 97.3275 28C97.3275 25.36 98.1142 23.1333 99.6875 21.32C101.288 19.5067 103.261 18.6 105.608 18.6ZM103.648 27.96C103.648 28.9467 103.954 29.7733 104.568 30.44C105.208 31.1067 105.968 31.44 106.848 31.44C107.728 31.44 108.474 31.1067 109.088 30.44C109.701 29.7733 110.008 28.9467 110.008 27.96C110.008 27 109.701 26.1867 109.088 25.52C108.474 24.8533 107.728 24.52 106.848 24.52C105.968 24.52 105.208 24.8533 104.568 25.52C103.954 26.1867 103.648 27 103.648 27.96ZM124.394 46H118.354V19H124.394V20C125.781 19.0667 127.274 18.6 128.874 18.6C131.248 18.6 133.221 19.5067 134.794 21.32C136.368 23.1333 137.154 25.36 137.154 28C137.154 30.6933 136.354 32.9333 134.754 34.72C133.208 36.5067 131.248 37.4 128.874 37.4C127.194 37.4 125.701 36.92 124.394 35.96V46ZM124.474 28.04C124.474 29 124.781 29.8133 125.394 30.48C126.034 31.12 126.794 31.44 127.674 31.44C128.554 31.44 129.301 31.12 129.914 30.48C130.528 29.8133 130.834 29 130.834 28.04C130.834 27.0533 130.528 26.2267 129.914 25.56C129.301 24.8667 128.554 24.52 127.674 24.52C126.794 24.52 126.034 24.8667 125.394 25.56C124.781 26.2267 124.474 27.0533 124.474 28.04ZM157.461 25.04L151.341 26.84C151.128 26.1467 150.728 25.5867 150.141 25.16C149.555 24.7333 148.888 24.52 148.141 24.52C147.208 24.52 146.408 24.8533 145.741 25.52C145.075 26.1867 144.741 26.9867 144.741 27.92C144.741 28.9333 145.061 29.7733 145.701 30.44C146.368 31.1067 147.181 31.44 148.141 31.44C148.888 31.44 149.555 31.24 150.141 30.84C150.728 30.4133 151.128 29.8533 151.341 29.16L157.461 30.92C156.795 32.8667 155.608 34.44 153.901 35.64C152.221 36.8133 150.301 37.4 148.141 37.4C145.368 37.4 143.048 36.5067 141.181 34.72C139.341 32.9333 138.421 30.6933 138.421 28C138.421 25.3067 139.341 23.0667 141.181 21.28C143.048 19.4933 145.368 18.6 148.141 18.6C150.301 18.6 152.221 19.1867 153.901 20.36C155.608 21.5333 156.795 23.0933 157.461 25.04ZM158.862 37V8H164.902V20.48C166.102 19.2267 167.609 18.6 169.422 18.6C171.289 18.6 172.876 19.2533 174.182 20.56C175.489 21.84 176.142 23.4533 176.142 25.4V37H170.062V26.88C170.062 26.1067 169.822 25.4533 169.342 24.92C168.862 24.3867 168.249 24.12 167.502 24.12C166.756 24.12 166.129 24.3867 165.622 24.92C165.142 25.4533 164.902 26.1067 164.902 26.88V37H158.862ZM186.193 18.6C187.793 18.6 189.287 19.0667 190.673 20V19H196.713V37H190.673V36C189.287 36.9333 187.793 37.4 186.193 37.4C183.847 37.4 181.873 36.5067 180.273 34.72C178.7 32.9067 177.913 30.6667 177.913 28C177.913 25.36 178.7 23.1333 180.273 21.32C181.873 19.5067 183.847 18.6 186.193 18.6ZM184.233 27.96C184.233 28.9467 184.54 29.7733 185.153 30.44C185.793 31.1067 186.553 31.44 187.433 31.44C188.313 31.44 189.06 31.1067 189.673 30.44C190.287 29.7733 190.593 28.9467 190.593 27.96C190.593 27 190.287 26.1867 189.673 25.52C189.06 24.8533 188.313 24.52 187.433 24.52C186.553 24.52 185.793 24.8533 185.153 25.52C184.54 26.1867 184.233 27 184.233 27.96ZM198.06 24.24V19H200.42V15.56H206.5V19H210.22V24.24H206.5V29.76C206.5 30.2133 206.66 30.6 206.98 30.92C207.3 31.2133 207.714 31.36 208.22 31.36H210.26V37H206.9C205.087 37 203.554 36.4533 202.3 35.36C201.047 34.24 200.42 32.8667 200.42 31.24V24.24H198.06ZM211.746 34.04C211.746 33.1067 212.066 32.32 212.706 31.68C213.346 31.0133 214.133 30.68 215.066 30.68C216.026 30.68 216.813 31 217.426 31.64C218.066 32.28 218.386 33.08 218.386 34.04C218.386 35 218.066 35.8 217.426 36.44C216.813 37.08 216.026 37.4 215.066 37.4C214.133 37.4 213.346 37.08 212.706 36.44C212.066 35.8 211.746 35 211.746 34.04ZM226.387 37H220.347V19H226.387V37ZM219.707 13.16C219.707 12.0933 220.053 11.2133 220.747 10.52C221.44 9.82667 222.307 9.48 223.347 9.48C224.413 9.48 225.293 9.82667 225.987 10.52C226.68 11.2133 227.027 12.0933 227.027 13.16C227.027 14.2 226.68 15.0667 225.987 15.76C225.293 16.4533 224.413 16.8 223.347 16.8C222.333 16.8 221.467 16.4533 220.747 15.76C220.053 15.0667 219.707 14.2 219.707 13.16ZM230.908 34.68C229.068 32.8667 228.148 30.64 228.148 28C228.148 25.36 229.068 23.1333 230.908 21.32C232.801 19.5067 235.121 18.6 237.868 18.6C240.614 18.6 242.921 19.5067 244.788 21.32C246.654 23.1067 247.588 25.3333 247.588 28C247.588 30.6667 246.654 32.8933 244.788 34.68C242.921 36.4933 240.614 37.4 237.868 37.4C235.121 37.4 232.801 36.4933 230.908 34.68ZM234.468 28C234.468 28.9333 234.801 29.7467 235.468 30.44C236.134 31.1067 236.934 31.44 237.868 31.44C238.828 31.44 239.628 31.1067 240.268 30.44C240.934 29.7733 241.268 28.96 241.268 28C241.268 27.04 240.934 26.2267 240.268 25.56C239.628 24.8667 238.828 24.52 237.868 24.52C236.934 24.52 236.134 24.8667 235.468 25.56C234.801 26.2267 234.468 27.04 234.468 28Z" fill="white"/><path d="M4.87352 51.9875L6.50379 33.8734L20.4517 41.6625L4.87352 51.9875Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M44 21.7369C44 33.7419 34.268 43.4739 22.2631 43.4739C10.2581 43.4739 0.526131 33.7419 0.526131 21.7369C0.526131 9.73196 10.2581 0 22.2631 0C34.268 0 44 9.73196 44 21.7369ZM25.7898 36.8657C24.6022 37.1593 23.3603 37.3151 22.0819 37.3151C13.5784 37.3151 6.68493 30.4216 6.68493 21.9181C6.68493 13.4145 13.5784 6.52107 22.0819 6.52107C30.5854 6.52107 37.4789 13.4145 37.4789 21.9181C37.4789 27.2722 34.7461 31.988 30.5992 34.7468L31.1816 39.3932L25.7898 36.8657Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M13.7494 21.7361C15.2501 21.7361 16.4666 20.5196 16.4666 19.019C16.4666 18.013 15.9198 17.1347 15.1073 16.665C17.2667 16.7128 19.0025 18.4782 19.0025 20.6491C19.0025 22.85 17.2183 24.6342 15.0174 24.6342C12.8165 24.6342 11.0323 22.85 11.0323 20.6491C11.0323 20.3416 11.0672 20.0422 11.1331 19.7547C11.4539 20.8979 12.5038 21.7361 13.7494 21.7361Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M28.2407 21.7361C29.7413 21.7361 30.9578 20.5196 30.9578 19.019C30.9578 18.013 30.4111 17.1347 29.5986 16.665C31.758 16.7128 33.4938 18.4782 33.4938 20.6491C33.4938 22.85 31.7096 24.6342 29.5087 24.6342C27.3078 24.6342 25.5236 22.85 25.5236 20.6491C25.5236 20.3416 25.5584 20.0422 25.6244 19.7547C25.9452 20.8979 26.995 21.7361 28.2407 21.7361Z" fill="white"/></svg></span>
+          <div class="mk-wp-headact">
+            <span class="mk-wp-headlink">Otwórz panel AsapChat</span>
+            <span class="mk-wp-headbtn">Rozłącz</span>
+          </div>
+        </div>
+
+        <div class="mk-wp-wrap">
+
+          <!-- STAN 1: niepołączony -->
+          <div class="mk-wp-panel mk-wp-p1">
+            <div class="mk-wp-narrow">
+              <div class="mk-wp-card mk-wp-center">
+                <h1 class="mk-wp-h1">Połącz sklep z AsapChat</h1>
+                <p class="mk-wp-lead">Czat AI i wyszukiwarka produktów na Twojej stronie, bez wklejania kodu.</p>
+                <div style="margin-top:24px"><span class="mk-wp-btn mk-wp-primary mk-wp-wide">Połącz z AsapChat</span></div>
+                <p style="margin-top:12px;color:var(--ac-label)">Nie masz konta? Założysz je w następnym kroku, za darmo.</p>
+                <ol class="mk-wp-steps" style="text-align:left">
+                  <li>Klikasz „Połącz z AsapChat”.</li>
+                  <li>Logujesz się albo zakładasz konto i przechodzisz krótki kreator.</li>
+                  <li>Wracasz tutaj automatycznie. Czat jest już na stronie.</li>
+                </ol>
+                <p class="mk-wp-desc" style="margin-top:20px">Po kliknięciu przejdziesz na panel.asapchat.io. Wtyczka łączy się z AsapChat dopiero od tego momentu. <span class="mk-wp-link">Polityka prywatności</span> i <span class="mk-wp-link">Regulamin</span>.</p>
+                <details class="mk-wp-more" style="text-align:left">
+                  <summary>Mam klucz instalacyjny</summary>
+                  <div class="mk-wp-keyrow">
+                    <input class="mk-wp-input" type="text" placeholder="ack_..." aria-label="Klucz instalacyjny">
+                    <span class="mk-wp-btn">Połącz kluczem</span>
+                  </div>
+                  <p class="mk-wp-desc">Klucz znajdziesz w panelu AsapChat: Sklep, Wtyczka, Klucz instalacyjny.</p>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAN 2 i 4: połączony -->
+          <div class="mk-wp-panel mk-wp-p2">
+            <div class="mk-wp-notice"><span>Połączono ze sklepem <b>Zielony Parapet</b>. Czat jest już na Twojej stronie.</span><span class="mk-wp-x" aria-label="Zamknij">×</span></div>
+
+            <!-- 1. Nagłówek: nazwa sklepu i plan (link do panelu i Rozłącz są w czarnym pasku) -->
+            <div class="mk-wp-title">
+              <h1 class="mk-wp-h1">Zielony Parapet</h1>
+              <span class="mk-wp-pill mk-wp-plan">Plan Free, 50 rozmów AI miesięcznie</span>
+              <span class="mk-wp-domain">zielonyparapet.pl</span>
+            </div>
+
+            <!-- 2. Status -->
+            <div class="mk-wp-card">
+              <h2>Status</h2>
+              <p class="mk-wp-desc">Sprawdzamy, czy widgety faktycznie pojawiły się na Twojej stronie.</p>
+              <div class="mk-wp-list">
+                <div class="mk-wp-item mk-wp-stat">
+                  <div class="mk-wp-txt">
+                    <b>Czat</b>
+                    <span class="mk-wp-desc mk-wp-not4">Ostatnio widziany dziś o 10:42</span>
+                    <span class="mk-wp-desc mk-wp-only4"><span class="mk-wp-link">Otwórz sklep w nowej karcie</span>, żeby sprawdzić.</span>
+                  </div>
+                  <span class="mk-wp-pill mk-wp-ok mk-wp-not4">Czat działa</span>
+                  <span class="mk-wp-pill mk-wp-only4">Jeszcze nie widziany</span>
+                </div>
+                <div class="mk-wp-item mk-wp-stat">
+                  <div class="mk-wp-txt">
+                    <b>Wyszukiwarka</b>
+                    <span class="mk-wp-desc mk-wp-not4">Ostatnio widziana dziś o 10:40</span>
+                    <span class="mk-wp-desc mk-wp-only4">Najpierw podłącz produkty.</span>
+                  </div>
+                  <span class="mk-wp-pill mk-wp-ok mk-wp-not4">Wyszukiwarka działa</span>
+                  <span class="mk-wp-pill mk-wp-only4">Niedostępna</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Widgety (ustawienia lokalne) -->
+            <div class="mk-wp-card">
+              <h2>Widgety</h2>
+              <p class="mk-wp-desc">Włącz albo wyłącz to, co ma być widoczne na stronie.</p>
+              <div class="mk-wp-list">
+                <div class="mk-wp-item">
+                  <div class="mk-wp-txt"><b>Czat</b><span class="mk-wp-desc">Okno rozmowy z asystentem AI na stronie.</span></div>
+                  <input class="mk-wp-toggle" type="checkbox" id="mk-wp-chat" checked><label class="mk-wp-sw" for="mk-wp-chat" aria-label="Czat"></label>
+                </div>
+                <div class="mk-wp-item mk-wp-not4">
+                  <div class="mk-wp-txt"><b>Wyszukiwarka AsapSearch</b><span class="mk-wp-desc">Zastępuje wyszukiwarkę sklepu szybką wyszukiwarką produktów.</span></div>
+                  <input class="mk-wp-toggle" type="checkbox" id="mk-wp-search" checked><label class="mk-wp-sw" for="mk-wp-search" aria-label="Wyszukiwarka AsapSearch"></label>
+                </div>
+                <div class="mk-wp-item mk-wp-not4">
+                  <div class="mk-wp-txt"><b>Dodawanie do koszyka z wyszukiwarki</b><span class="mk-wp-desc">Przycisk „Do koszyka” od razu w wynikach wyszukiwania.</span></div>
+                  <input class="mk-wp-toggle" type="checkbox" id="mk-wp-cart" checked><label class="mk-wp-sw" for="mk-wp-cart" aria-label="Dodawanie do koszyka z wyszukiwarki"></label>
+                </div>
+                <div class="mk-wp-item mk-wp-off mk-wp-only4">
+                  <div class="mk-wp-txt"><b>Wyszukiwarka AsapSearch</b><span class="mk-wp-desc">Wyszukiwarka włączy się, gdy AsapChat zaimportuje Twoje produkty. <span class="mk-wp-link">Podłącz produkty</span></span></div>
+                  <input class="mk-wp-toggle" type="checkbox" id="mk-wp-search-off" disabled><label class="mk-wp-sw" for="mk-wp-search-off" aria-label="Wyszukiwarka AsapSearch, niedostępna"></label>
+                </div>
+                <div class="mk-wp-item mk-wp-off mk-wp-only4">
+                  <div class="mk-wp-txt"><b>Dodawanie do koszyka z wyszukiwarki</b><span class="mk-wp-desc">Dostępne razem z wyszukiwarką.</span></div>
+                  <input class="mk-wp-toggle" type="checkbox" id="mk-wp-cart-off" disabled><label class="mk-wp-sw" for="mk-wp-cart-off" aria-label="Dodawanie do koszyka, niedostępne"></label>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Wygląd (zapis w AsapChat: PATCH /settings) -->
+            <div class="mk-wp-card">
+              <h2>Wygląd</h2>
+              <p class="mk-wp-desc">To te same ustawienia co w panelu AsapChat. Zmiana tutaj jest widoczna tam i odwrotnie.</p>
+              <div class="mk-wp-grid">
+                <label class="mk-wp-field">
+                  <span class="mk-wp-label">Nazwa asystenta <small>5 / 40</small></span>
+                  <input class="mk-wp-input" type="text" value="Flora" maxlength="40">
+                </label>
+                <div class="mk-wp-field">
+                  <span class="mk-wp-label">Kolor główny</span>
+                  <div class="mk-wp-color">
+                    <input type="color" value="#2f7d4f" aria-label="Wybierz kolor">
+                    <input class="mk-wp-input" type="text" value="#2f7d4f" maxlength="7" aria-label="Kolor jako #rrggbb">
+                  </div>
+                </div>
+                <div class="mk-wp-field mk-wp-full">
+                  <span class="mk-wp-label">Pozycja na stronie</span>
+                  <div class="mk-wp-seg">
+                    <input type="radio" name="mk-wp-pos" id="mk-wp-pos-r" checked><label for="mk-wp-pos-r">Prawy dół</label>
+                    <input type="radio" name="mk-wp-pos" id="mk-wp-pos-l"><label for="mk-wp-pos-l">Lewy dół</label>
+                  </div>
+                </div>
+                <label class="mk-wp-field">
+                  <span class="mk-wp-label">Powitanie 1 <small>32 / 120</small></span>
+                  <input class="mk-wp-input" type="text" value="Cześć! Szukasz czegoś zielonego?" maxlength="120">
+                </label>
+                <label class="mk-wp-field">
+                  <span class="mk-wp-label">Powitanie 2 <small>0 / 120</small></span>
+                  <input class="mk-wp-input" type="text" value="" placeholder="Puste pole = bez drugiego dymka" maxlength="120">
+                </label>
+              </div>
+            </div>
+
+            <!-- 5. Gdzie pokazywać (ustawienia lokalne) -->
+            <div class="mk-wp-card">
+              <h2>Gdzie pokazywać</h2>
+              <p class="mk-wp-desc">Na wybranych stronach i produktach nie pokażemy ani czatu, ani wyszukiwarki.</p>
+              <div class="mk-wp-grid">
+                <div class="mk-wp-field mk-wp-full">
+                  <span class="mk-wp-label">Opóźnienie czatu</span>
+                  <div class="mk-wp-unit"><input class="mk-wp-input" type="number" min="0" max="60" value="3" aria-label="Opóźnienie w sekundach"><span>sekund</span></div>
+                  <p class="mk-wp-desc">Po ilu sekundach od wejścia na stronę pojawia się czat. Od 0 do 60.</p>
+                </div>
+                <div class="mk-wp-field">
+                  <span class="mk-wp-label">Strony bez widgetów</span>
+                  <div class="mk-wp-chips"><span class="mk-wp-chip">Zamówienie <i>×</i></span><span class="mk-wp-chip">Regulamin <i>×</i></span><input type="text" placeholder="Wybierz stronę" aria-label="Wybierz stronę"></div>
+                </div>
+                <div class="mk-wp-field">
+                  <span class="mk-wp-label">Produkty bez widgetów</span>
+                  <div class="mk-wp-chips"><span class="mk-wp-chip">Karta podarunkowa <i>×</i></span><input type="text" placeholder="Szukaj produktu" aria-label="Szukaj produktu"></div>
+                </div>
+                <label class="mk-wp-field mk-wp-full">
+                  <span class="mk-wp-label">Adres zawiera</span>
+                  <textarea class="mk-wp-input" rows="3">/koszyk
+/moje-konto</textarea>
+                  <span class="mk-wp-desc" style="display:block">Jeden fragment adresu w linii. Widgetów nie będzie na każdej stronie, której adres zawiera ten tekst.</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- 6. Źródło zamówień i produktów -->
+            <div class="mk-wp-card">
+              <h2>Źródło zamówień i produktów</h2>
+              <p class="mk-wp-desc">Dzięki temu asystent zna Twoje produkty i odpowiada na pytania o status zamówienia.</p>
+              <div class="mk-wp-list">
+                <div class="mk-wp-item">
+                  <div class="mk-wp-txt"><b>Produkty</b></div>
+                  <span class="mk-wp-pill mk-wp-ok mk-wp-not4">Podłączone</span>
+                  <span class="mk-wp-pill mk-wp-only4">Niepodłączone</span>
+                </div>
+                <div class="mk-wp-item">
+                  <div class="mk-wp-txt"><b>Zamówienia</b></div>
+                  <span class="mk-wp-pill mk-wp-ok mk-wp-not4">Podłączone</span>
+                  <span class="mk-wp-pill mk-wp-only4">Niepodłączone</span>
+                </div>
+              </div>
+              <div class="mk-wp-row" style="margin-top:16px"><span class="mk-wp-btn">Podłącz w AsapChat</span></div>
+              <p class="mk-wp-desc" style="margin-top:10px">W panelu AsapChat kliknij „Połącz z WooCommerce”. Zobaczysz ekran zgody WooCommerce, zatwierdzasz i gotowe. Nie kopiujesz żadnych kluczy.</p>
+              <details class="mk-wp-more">
+                <summary>Jak wygenerować klucze API w WooCommerce</summary>
+                <ol>
+                  <li>Wejdź w <span class="mk-wp-link">WooCommerce, Ustawienia, Zaawansowane, REST API</span>.</li>
+                  <li>Kliknij „Dodaj klucz”.</li>
+                  <li>Wpisz opis, np. „AsapChat”. Uprawnienia: „Odczyt”.</li>
+                  <li>Kliknij „Wygeneruj klucz API”.</li>
+                  <li>Skopiuj Consumer key i Consumer secret. Wklej je w panelu AsapChat po kliknięciu „Podłącz w AsapChat”. Secret jest widoczny tylko raz.</li>
+                </ol>
+              </details>
+            </div>
+
+            <div class="mk-wp-save">
+              <span class="mk-wp-btn mk-wp-primary">Zapisz zmiany</span>
+              <span class="mk-wp-desc">Wygląd zapisujemy na Twoim koncie AsapChat. Pozostałe ustawienia zostają w WordPressie.</span>
+            </div>
+          </div>
+
+          <!-- STAN 3: błąd, połącz ponownie (401, 409, 410) -->
+          <div class="mk-wp-panel mk-wp-p3">
+            <div class="mk-wp-narrow">
+              <div class="mk-wp-notice mk-wp-err"><span><b>Czat i wyszukiwarka nie są teraz dodawane do strony.</b></span></div>
+              <div class="mk-wp-card">
+                <h1 class="mk-wp-h1">Połączenie z AsapChat zostało przerwane</h1>
+                <p class="mk-wp-lead">Połączenie odwołano w panelu AsapChat. Połącz stronę ponownie, żeby przywrócić czat.</p>
+                <div style="margin-top:24px"><span class="mk-wp-btn mk-wp-primary mk-wp-wide">Połącz ponownie</span></div>
+                <p class="mk-wp-desc" style="margin-top:14px">Twoje ustawienia widgetów i wykluczeń zostały zachowane.</p>
+                <details class="mk-wp-more">
+                  <summary>Mam klucz instalacyjny</summary>
+                  <div class="mk-wp-keyrow">
+                    <input class="mk-wp-input" type="text" placeholder="ack_..." aria-label="Klucz instalacyjny">
+                    <span class="mk-wp-btn">Połącz kluczem</span>
+                  </div>
+                  <p class="mk-wp-desc">Klucz znajdziesz w panelu AsapChat: Sklep, Wtyczka, Klucz instalacyjny.</p>
+                </details>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Notatka do makiety, nie jest częścią ekranu -->
+      <div class="mk-wp-memo mk-wp-panel mk-wp-p3">Notatka do makiety. Inne opisy w tym stanie: „To połączenie jest przypisane do innej domeny. Połącz tę stronę ponownie.” (409) oraz „Ten sklep został usunięty w AsapChat. Połącz stronę z innym sklepem.” (410). Gdy AsapChat chwilowo nie odpowiada, ekran zostaje w stanie „Połączony” z komunikatem „Nie udało się odświeżyć ustawień z AsapChat. Czat działa dalej na zapisanych ustawieniach.”</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
