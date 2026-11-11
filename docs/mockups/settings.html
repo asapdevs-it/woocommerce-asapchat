@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Makieta: WordPress, Ustawienia AsapChat</title>
+<style>
+.mk-wp{--wp-blue:#2271b1;--wp-blue-d:#135e96;--wp-dark:#1d2327;--wp-dark2:#2c3338;--wp-bg:#f0f0f1;--wp-line:#c3c4c7;--wp-text:#1d2327;--wp-muted:#50575e;--wp-green:#00a32a;--wp-red:#d63638;--wp-yellow:#dba617;container-type:inline-size;font:13px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;color:var(--wp-text);background:#fff;border:1px solid var(--wp-line);border-radius:6px;overflow:hidden;text-align:left}
+.mk-wp *{box-sizing:border-box}
+.mk-wp .mk-wp-radio,.mk-wp .mk-wp-check{position:absolute;opacity:0;pointer-events:none}
+.mk-wp .mk-wp-switcher{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 10px;background:#fff;border-bottom:1px solid var(--wp-line)}
+.mk-wp .mk-wp-switcher span{color:var(--wp-muted);margin-right:4px}
+.mk-wp .mk-wp-switcher label{padding:4px 10px;border:1px solid var(--wp-line);border-radius:999px;cursor:pointer;background:#f6f7f7;color:var(--wp-text)}
+.mk-wp #mk-wp-s1:checked ~ .mk-wp-switcher label[for="mk-wp-s1"],
+.mk-wp #mk-wp-s2:checked ~ .mk-wp-switcher label[for="mk-wp-s2"],
+.mk-wp #mk-wp-s3:checked ~ .mk-wp-switcher label[for="mk-wp-s3"],
+.mk-wp #mk-wp-s4:checked ~ .mk-wp-switcher label[for="mk-wp-s4"]{background:var(--wp-dark);border-color:var(--wp-dark);color:#fff}
+.mk-wp .mk-wp-radio:focus-visible ~ .mk-wp-switcher{outline:2px solid var(--wp-blue);outline-offset:-2px}
+.mk-wp .mk-wp-bar{height:32px;background:var(--wp-dark);color:#c3c4c7;display:flex;align-items:center;gap:16px;padding:0 12px;font-size:13px}
+.mk-wp .mk-wp-bar b{color:#fff;font-weight:600}
+.mk-wp .mk-wp-bar .mk-wp-right{margin-left:auto}
+.mk-wp .mk-wp-body{display:flex;background:var(--wp-bg);min-height:560px}
+.mk-wp .mk-wp-side{width:160px;flex:none;background:var(--wp-dark);color:#f0f0f1;padding:8px 0}
+.mk-wp .mk-wp-side div{padding:7px 12px;font-size:14px}
+.mk-wp .mk-wp-side .mk-wp-cur{background:var(--wp-blue);color:#fff;font-weight:600}
+.mk-wp .mk-wp-side .mk-wp-sub{background:var(--wp-dark2);padding:6px 12px;font-size:13px;color:#c3c4c7}
+.mk-wp .mk-wp-side .mk-wp-sub.mk-wp-on{color:#fff;font-weight:600}
+.mk-wp .mk-wp-main{flex:1;min-width:0;padding:16px 20px 28px}
+.mk-wp .mk-wp-h1{font-size:23px;font-weight:400;margin:0 0 4px;line-height:1.3}
+.mk-wp .mk-wp-lead{color:var(--wp-muted);margin:0 0 16px;max-width:640px}
+.mk-wp .mk-wp-panel{display:none}
+.mk-wp #mk-wp-s1:checked ~ .mk-wp-body .mk-wp-p1,
+.mk-wp #mk-wp-s2:checked ~ .mk-wp-body .mk-wp-p2,
+.mk-wp #mk-wp-s3:checked ~ .mk-wp-body .mk-wp-p3,
+.mk-wp #mk-wp-s4:checked ~ .mk-wp-body .mk-wp-p2{display:block}
+.mk-wp .mk-wp-card{background:#fff;border:1px solid var(--wp-line);box-shadow:0 1px 1px rgba(0,0,0,.04);padding:16px 20px;margin:0 0 14px;max-width:680px}
+.mk-wp .mk-wp-card h2{font-size:14px;font-weight:600;margin:0 0 8px}
+.mk-wp .mk-wp-card p{margin:0 0 10px}
+.mk-wp .mk-wp-muted{color:var(--wp-muted)}
+.mk-wp .mk-wp-small{font-size:12px;color:var(--wp-muted)}
+.mk-wp .mk-wp-link{color:var(--wp-blue);text-decoration:underline;cursor:pointer}
+.mk-wp .mk-wp-btn{display:inline-block;min-height:32px;line-height:30px;padding:0 12px;border:1px solid var(--wp-blue);border-radius:3px;background:#f6f7f7;color:var(--wp-blue);font-size:13px;cursor:pointer;white-space:nowrap}
+.mk-wp .mk-wp-btn.mk-wp-primary{background:var(--wp-blue);color:#fff}
+.mk-wp .mk-wp-btn.mk-wp-hero{min-height:40px;line-height:38px;padding:0 18px;font-size:14px}
+.mk-wp .mk-wp-btn.mk-wp-danger{border-color:var(--wp-red);color:var(--wp-red);background:#fff}
+.mk-wp .mk-wp-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.mk-wp .mk-wp-notice{background:#fff;border:1px solid var(--wp-line);border-left:4px solid var(--wp-green);padding:8px 12px;margin:0 0 14px;max-width:680px}
+.mk-wp .mk-wp-notice.mk-wp-err{border-left-color:var(--wp-red)}
+.mk-wp .mk-wp-notice.mk-wp-warn{border-left-color:var(--wp-yellow)}
+.mk-wp .mk-wp-keylabel{display:inline-block;margin-top:14px;color:var(--wp-blue);text-decoration:underline;cursor:pointer}
+.mk-wp .mk-wp-keylabel::before{content:"▸ ";text-decoration:none;display:inline-block}
+.mk-wp .mk-wp-check:checked + .mk-wp-keylabel::before{content:"▾ "}
+.mk-wp .mk-wp-check:focus-visible + .mk-wp-keylabel{outline:2px solid var(--wp-blue);outline-offset:2px}
+.mk-wp .mk-wp-keybox{display:none;margin-top:10px;padding:12px;background:#f6f7f7;border:1px solid #dcdcde}
+.mk-wp .mk-wp-check:checked ~ .mk-wp-keybox{display:block}
+.mk-wp .mk-wp-field{display:block;font-weight:600;margin-bottom:4px}
+.mk-wp .mk-wp-input{flex:1;min-width:180px;height:32px;border:1px solid #8c8f94;border-radius:4px;padding:0 8px;font:13px ui-monospace,Menlo,Consolas,monospace;color:var(--wp-muted);background:#fff;display:flex;align-items:center;overflow:hidden;white-space:nowrap}
+.mk-wp .mk-wp-status{display:flex;gap:10px;align-items:flex-start}
+.mk-wp .mk-wp-dot{flex:none;width:10px;height:10px;border-radius:50%;background:var(--wp-green);margin-top:5px}
+.mk-wp .mk-wp-dot.mk-wp-red{background:var(--wp-red)}
+.mk-wp .mk-wp-dot.mk-wp-grey{background:#a7aaad}
+.mk-wp .mk-wp-pill{display:inline-block;padding:1px 8px;border-radius:999px;background:#f0f6fc;border:1px solid #c5d9ed;color:var(--wp-blue-d);font-size:12px}
+.mk-wp .mk-wp-table{width:100%;border-collapse:collapse}
+.mk-wp .mk-wp-table th{width:200px;text-align:left;vertical-align:top;font-weight:600;padding:12px 10px 12px 0}
+.mk-wp .mk-wp-table td{padding:12px 0;vertical-align:top}
+.mk-wp .mk-wp-table tr + tr th,.mk-wp .mk-wp-table tr + tr td{border-top:1px solid #f0f0f1}
+.mk-wp .mk-wp-toggle{position:absolute;opacity:0}
+.mk-wp .mk-wp-sw{display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+.mk-wp .mk-wp-sw i{width:36px;height:18px;border-radius:9px;background:#fff;border:1px solid #1e1e1e;position:relative;flex:none;display:block}
+.mk-wp .mk-wp-sw i::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#1e1e1e;transition:left .1s}
+.mk-wp .mk-wp-toggle:checked + .mk-wp-sw i{background:var(--wp-blue);border-color:var(--wp-blue)}
+.mk-wp .mk-wp-toggle:checked + .mk-wp-sw i::after{left:20px;background:#fff}
+.mk-wp .mk-wp-toggle:focus-visible + .mk-wp-sw i{outline:2px solid var(--wp-blue);outline-offset:2px}
+.mk-wp .mk-wp-toggle:disabled + .mk-wp-sw{cursor:not-allowed;color:#a7aaad}
+.mk-wp .mk-wp-toggle:disabled + .mk-wp-sw i{border-color:#c3c4c7}
+.mk-wp .mk-wp-toggle:disabled + .mk-wp-sw i::after{background:#c3c4c7}
+.mk-wp .mk-wp-only4,.mk-wp .mk-wp-not4{display:none}
+.mk-wp #mk-wp-s4:checked ~ .mk-wp-body .mk-wp-only4{display:block}
+.mk-wp #mk-wp-s2:checked ~ .mk-wp-body .mk-wp-not4{display:block}
+.mk-wp .mk-wp-foot{margin-top:6px}
+@container (max-width:640px){
+.mk-wp .mk-wp-side{display:none}
+.mk-wp .mk-wp-main{padding:14px 12px 24px}
+.mk-wp .mk-wp-bar .mk-wp-hide{display:none}
+.mk-wp .mk-wp-table th,.mk-wp .mk-wp-table td{display:block;width:auto;padding:10px 0 0}
+.mk-wp .mk-wp-table td{padding:4px 0 10px}
+.mk-wp .mk-wp-table tr + tr td{border-top:0}
+.mk-wp .mk-wp-card{padding:14px}
+}
+</style>
+</head>
+<body>
+<div class="mk-wp">
+  <input class="mk-wp-radio" type="radio" name="mk-wp-state" id="mk-wp-s1" checked>
+  <input class="mk-wp-radio" type="radio" name="mk-wp-state" id="mk-wp-s2">
+  <input class="mk-wp-radio" type="radio" name="mk-wp-state" id="mk-wp-s4">
+  <input class="mk-wp-radio" type="radio" name="mk-wp-state" id="mk-wp-s3">
+  <div class="mk-wp-switcher">
+    <span>Stan makiety:</span>
+    <label for="mk-wp-s1">Niepołączony</label>
+    <label for="mk-wp-s2">Połączony</label>
+    <label for="mk-wp-s4">Połączony, bez wyszukiwarki</label>
+    <label for="mk-wp-s3">Błąd</label>
+  </div>
+  <div class="mk-wp-bar"><b>W</b><span>Sklep Zielony Parapet</span><span class="mk-wp-hide">+ Utwórz</span><span class="mk-wp-right">Witaj, admin</span></div>
+  <div class="mk-wp-body">
+    <div class="mk-wp-side">
+      <div>Kokpit</div><div>Wpisy</div><div>Media</div><div>Strony</div><div>WooCommerce</div><div>Produkty</div><div>Wygląd</div><div>Wtyczki</div>
+      <div class="mk-wp-cur">Ustawienia</div>
+      <div class="mk-wp-sub">Ogólne</div><div class="mk-wp-sub">Czytanie</div><div class="mk-wp-sub">Bezpośrednie odnośniki</div><div class="mk-wp-sub mk-wp-on">AsapChat</div>
+    </div>
+    <div class="mk-wp-main">
+      <h1 class="mk-wp-h1">AsapChat</h1>
+      <p class="mk-wp-lead">Czat AI i wyszukiwarka produktów na Twojej stronie. Wygląd czatu, bazę wiedzy i rozmowy obsługujesz w panelu AsapChat.</p>
+
+      <!-- STAN 1: niepołączony -->
+      <div class="mk-wp-panel mk-wp-p1">
+        <div class="mk-wp-card">
+          <h2>Połącz stronę z kontem AsapChat</h2>
+          <p>Klikasz, logujesz się w panelu AsapChat, wybierasz sklep i wracasz tutaj. Zajmuje to około minuty.</p>
+          <div class="mk-wp-row">
+            <span class="mk-wp-btn mk-wp-primary mk-wp-hero">Połącz z AsapChat</span>
+            <span class="mk-wp-link">Nie masz konta? Załóż je za darmo</span>
+          </div>
+          <p class="mk-wp-small" style="margin-top:12px">Po kliknięciu przejdziesz na panel.asapchat.io. Wtyczka łączy się z usługą AsapChat dopiero od tego momentu. <span class="mk-wp-link">Polityka prywatności</span> · <span class="mk-wp-link">Regulamin</span></p>
+          <input class="mk-wp-check" type="checkbox" id="mk-wp-key">
+          <label class="mk-wp-keylabel" for="mk-wp-key">Mam klucz instalacyjny</label>
+          <div class="mk-wp-keybox">
+            <span class="mk-wp-field">Klucz instalacyjny</span>
+            <div class="mk-wp-row">
+              <span class="mk-wp-input">ack_…</span>
+              <span class="mk-wp-btn">Połącz kluczem</span>
+            </div>
+            <p class="mk-wp-small" style="margin:8px 0 0">Klucz znajdziesz w panelu AsapChat: Sklep, karta „Wtyczka”, przycisk „Pokaż klucz instalacyjny”.</p>
+          </div>
+        </div>
+        <div class="mk-wp-card">
+          <h2>Co się stanie po połączeniu</h2>
+          <p class="mk-wp-muted" style="margin:0">Na stronie pojawi się czat AsapChat. Jeśli Twój sklep ma zaimportowane produkty, włączy się też wyszukiwarka AsapSearch. Każdą z tych rzeczy wyłączysz jednym przełącznikiem.</p>
+        </div>
+      </div>
+
+      <!-- STAN 2 i 4: połączony -->
+      <div class="mk-wp-panel mk-wp-p2">
+        <div class="mk-wp-notice">Połączono ze sklepem <b>Zielony Parapet</b>. Czat jest już na Twojej stronie.</div>
+        <div class="mk-wp-card">
+          <div class="mk-wp-status">
+            <span class="mk-wp-dot"></span>
+            <div>
+              <b>Połączono: Zielony Parapet</b> <span class="mk-wp-pill">Plan Free, 50 rozmów AI miesięcznie</span><br>
+              <span class="mk-wp-small">zielonyparapet.pl · połączono 11.11.2026</span>
+            </div>
+          </div>
+        </div>
+        <div class="mk-wp-card">
+          <table class="mk-wp-table">
+            <tr>
+              <th>Czat AsapChat</th>
+              <td>
+                <input class="mk-wp-toggle" type="checkbox" id="mk-wp-chat" checked>
+                <label class="mk-wp-sw" for="mk-wp-chat"><i></i>Pokazuj czat na stronie</label>
+              </td>
+            </tr>
+            <tr>
+              <th>Wyszukiwarka AsapSearch</th>
+              <td>
+                <div class="mk-wp-not4">
+                  <input class="mk-wp-toggle" type="checkbox" id="mk-wp-search" checked>
+                  <label class="mk-wp-sw" for="mk-wp-search"><i></i>Zastąp wyszukiwarkę sklepu wyszukiwarką AsapSearch</label>
+                </div>
+                <div class="mk-wp-only4">
+                  <input class="mk-wp-toggle" type="checkbox" id="mk-wp-search-off" disabled>
+                  <label class="mk-wp-sw" for="mk-wp-search-off"><i></i>Wyszukiwarka niedostępna</label>
+                  <p class="mk-wp-small" style="margin:6px 0 0">Wyszukiwarka będzie dostępna, gdy zaimportujesz produkty w panelu AsapChat. <span class="mk-wp-link">Przejdź do importu</span></p>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>Status na stronie</th>
+              <td>
+                <div class="mk-wp-status"><span class="mk-wp-dot"></span><span>Widget widziany na stronie: tak, ostatnio dziś o 10:42</span></div>
+                <p class="mk-wp-small" style="margin:6px 0 0">Ustawienia odświeżone 11.11.2026, 10:40. <span class="mk-wp-link">Odśwież teraz</span></p>
+              </td>
+            </tr>
+          </table>
+          <div class="mk-wp-row mk-wp-foot">
+            <span class="mk-wp-btn mk-wp-primary">Zapisz zmiany</span>
+            <span class="mk-wp-btn">Otwórz panel AsapChat</span>
+            <span class="mk-wp-btn mk-wp-danger">Rozłącz</span>
+          </div>
+        </div>
+        <p class="mk-wp-small">Kolory, powitanie i pozycję czatu zmienisz w panelu AsapChat. Zmiany pojawią się tutaj najpóźniej po 24 godzinach albo od razu po kliknięciu „Odśwież teraz”.</p>
+      </div>
+
+      <!-- STAN 3: błąd -->
+      <div class="mk-wp-panel mk-wp-p3">
+        <div class="mk-wp-notice mk-wp-err"><b>Połączenie z AsapChat wygasło.</b> Czat i wyszukiwarka nie są teraz dodawane do strony.</div>
+        <div class="mk-wp-card">
+          <div class="mk-wp-status">
+            <span class="mk-wp-dot mk-wp-red"></span>
+            <div>
+              <b>Brak połączenia ze sklepem Zielony Parapet</b><br>
+              <span class="mk-wp-muted">Połączenie zostało odwołane w panelu AsapChat albo sklep został usunięty. Połącz stronę ponownie, żeby przywrócić czat.</span>
+            </div>
+          </div>
+          <div class="mk-wp-row" style="margin-top:14px">
+            <span class="mk-wp-btn mk-wp-primary mk-wp-hero">Połącz ponownie</span>
+            <span class="mk-wp-btn mk-wp-danger">Usuń połączenie</span>
+          </div>
+        </div>
+        <div class="mk-wp-notice mk-wp-warn">Inny przypadek: gdy serwer AsapChat chwilowo nie odpowiada, wtyczka zostawia ostatnie ustawienia i czat działa dalej. Wtedy widzisz stan „Połączony” z dopiskiem „Nie udało się odświeżyć ustawień”.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
