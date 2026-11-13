@@ -110,6 +110,7 @@ final class MainFileTest extends TestCase {
 		$this->assertNotFalse( has_action( 'admin_enqueue_scripts', array( 'Asapchat_Admin', 'enqueue_assets' ) ) );
 		$this->assertNotFalse( has_action( 'admin_post_asapchat_connect_start', array( 'Asapchat_Connect', 'handle_start' ) ) );
 		$this->assertNotFalse( has_action( 'admin_post_asapchat_connect_callback', array( 'Asapchat_Connect', 'handle_callback' ) ) );
+		$this->assertNotFalse( has_action( 'admin_post_asapchat_connect_key', array( 'Asapchat_Connect', 'handle_key' ) ) );
 		$this->assertFalse( has_action( 'admin_post_nopriv_asapchat_connect_callback' ), 'No handler for logged-out users.' );
 	}
 

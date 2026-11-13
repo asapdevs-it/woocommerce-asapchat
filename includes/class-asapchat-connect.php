@@ -43,6 +43,64 @@ class Asapchat_Connect {
 	public static function init() {
 		add_action( 'admin_post_asapchat_connect_start', array( __CLASS__, 'handle_start' ) );
 		add_action( 'admin_post_asapchat_connect_callback', array( __CLASS__, 'handle_callback' ) );
+		add_action( 'admin_post_asapchat_connect_key', array( __CLASS__, 'handle_key' ) );
+	}
+
+	/**
+	 * "Connect with key": the fallback when the redirect cannot work (spec point 7).
+	 *
+	 * @return void
+	 */
+	public static function handle_key() {
+		check_admin_referer( 'asapchat_connect_key' );
+		self::require_admin();
+
+		$key    = isset( $_POST['asapchat_key'] ) ? sanitize_text_field( wp_unslash( $_POST['asapchat_key'] ) ) : '';
+		$result = self::connect_with_key( $key );
+
+		// The key never goes into the notice or the address.
+		Asapchat_Admin::add_notice( $result['notice'], $result['value'] );
+		self::back_to_screen();
+	}
+
+	/**
+	 * Checks an install key with GET /config and saves the connection like the button does.
+	 *
+	 * The first call binds the key to this site (X-Site-Url). The key is already a connection token.
+	 *
+	 * @param string $key Install key pasted by the user.
+	 * @return array{notice: string, value: string} Notice code for the screen.
+	 */
+	public static function connect_with_key( $key ) {
+		$key = trim( $key );
+
+		if ( ! preg_match( self::TOKEN_PATTERN, $key ) ) {
+			return self::result( 'key_format' );
+		}
+
+		$response = Asapchat_Api::get_config( $key );
+
+		if ( 401 === $response['status'] ) {
+			return self::result( 'key_invalid' );
+		}
+
+		if ( 409 === $response['status'] ) {
+			return self::result( 'key_other_domain' );
+		}
+
+		if ( 200 !== $response['status'] || ! is_array( $response['data'] ) ) {
+			return self::result( 'key_failed' );
+		}
+
+		if ( ! self::is_supported_config( $response['data'] ) ) {
+			return self::result( 'update_plugin' );
+		}
+
+		self::save_connection( $key, $response['data'] );
+
+		$shop_name = isset( $response['data']['shop']['name'] ) ? (string) $response['data']['shop']['name'] : '';
+
+		return self::result( 'connected', $shop_name );
 	}
 
 	/**
