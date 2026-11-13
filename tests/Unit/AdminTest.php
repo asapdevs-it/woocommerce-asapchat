@@ -15,18 +15,7 @@ final class AdminTest extends TestCase {
 
 	public static function set_up_before_class() {
 		parent::set_up_before_class();
-
-		if ( ! defined( 'ASAPCHAT_URL' ) ) {
-			define( 'ASAPCHAT_URL', 'https://example.test/wp-content/plugins/asapchat/' );
-		}
-		if ( ! defined( 'ASAPCHAT_VERSION' ) ) {
-			define( 'ASAPCHAT_VERSION', '1.0.0' );
-		}
-		if ( ! defined( 'MINUTE_IN_SECONDS' ) ) {
-			define( 'MINUTE_IN_SECONDS', 60 );
-		}
-
-		require_once ASAPCHAT_TEST_ROOT . '/includes/class-asapchat-admin.php';
+		self::load_classes();
 	}
 
 	protected function set_up() {

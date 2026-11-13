@@ -1,0 +1,8 @@
+{
+  "site_url_required": {"error": "site_url_required"},
+  "invalid_grant": {"error": "invalid_grant"},
+  "unauthorized": {"error": "unauthorized"},
+  "host_mismatch": {"error": "host_mismatch"},
+  "shop_deleted": {"error": "shop_deleted"},
+  "validation": {"message": "format atrybutu jest nieprawidłowy.", "errors": {"main_color": ["format atrybutu jest nieprawidłowy."]}}
+}
