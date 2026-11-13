@@ -126,7 +126,7 @@ Every PR passes the full validation gate before review sign-off, in this order:
 - `vendor/bin/phpunit`
 - `npm ci`
 - `npx @wordpress/env start`
-- `npx @wordpress/env run cli wp plugin check asapchat --exclude-directories=.ai,.github,docs,tests,vendor,node_modules`
+- `bash bin/plugin-check.sh` (Plugin Check with `--use-pcpignore`; fails on any `ERROR` row because Plugin Check itself always exits with 0)
 
 Any non-zero exit fails the gate and blocks the PR. The implementing skills run the gate before opening a PR, and `om-check-and-commit` runs it before pushing a hand-worked branch. The command list lives in `.ai/agentic.config.json`; when it changes, update it there and in this section together.
 

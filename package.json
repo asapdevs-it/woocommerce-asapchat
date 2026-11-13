@@ -1,0 +1,12 @@
+{
+  "name": "asapchat",
+  "private": true,
+  "description": "Development tools for the AsapChat WordPress plugin. Nothing from npm ships in the plugin package.",
+  "license": "GPL-2.0-or-later",
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@wordpress/env": "^11.17.0"
+  }
+}

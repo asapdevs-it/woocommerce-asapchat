@@ -625,7 +625,7 @@ Etykiety: `feature`, `priority-medium`, `risk-medium`, `needs-qa`.
 `.github/workflows/ci.yml`, uruchamiany dla każdego PR:
 
 1. Zadanie `php` w macierzy PHP 7.4, 8.1, 8.3: `composer install`, `vendor/bin/phpcs`, `vendor/bin/phpunit`.
-2. Zadanie `plugin-check` (Node 20): `npm ci`, `npx @wordpress/env start`, potem `npx @wordpress/env run cli wp plugin check asapchat --exclude-directories=.ai,.github,docs,tests,vendor,node_modules`.
+2. Zadanie `plugin-check` (Node 20): `npm ci`, `npx @wordpress/env start`, potem `bash bin/plugin-check.sh`. Skrypt uruchamia `wp plugin check asapchat --exclude-directories=.ai,.github,docs,tests,vendor,node_modules --use-pcpignore` i kończy się błędem przy każdym wierszu `ERROR` w raporcie, bo sam Plugin Check zawsze zwraca kod 0.
 
 Bramka walidacji lokalnie (te same komendy są w `AGENTS.md` i `.ai/agentic.config.json`):
 
@@ -635,7 +635,7 @@ vendor/bin/phpcs
 vendor/bin/phpunit
 npm ci
 npx @wordpress/env start
-npx @wordpress/env run cli wp plugin check asapchat --exclude-directories=.ai,.github,docs,tests,vendor,node_modules
+bash bin/plugin-check.sh
 ```
 
 Fonty: `npm pack @fontsource/open-sans`, z rozpakowanego archiwum bierzesz z katalogu `files/` osiem plików `open-sans-latin-{400,600,700,800}-normal.woff2` i `open-sans-latin-ext-{400,600,700,800}-normal.woff2` i kopiujesz je do `admin/fonts/`. Licencję (SIL OFL 1.1) wpisujesz w `readme.txt`.
@@ -658,11 +658,11 @@ Fonty: `npm pack @fontsource/open-sans`, z rozpakowanego archiwum bierzesz z kat
 }
 ```
 
-Mapowanie jest potrzebne, bo katalog repo nazywa się `woocommerce-asapchat`, a wtyczka musi leżeć w `plugins/asapchat`. Podpięty jest cały katalog repo, dlatego Plugin Check uruchamiasz z `--exclude-directories=.ai,.github,docs,tests,vendor,node_modules`. Te same katalogi (oraz `.wp-env.json`, `package.json`, `package-lock.json`, `composer.*`, `phpcs.xml.dist`, `phpunit.xml.dist`, pliki `*.md` z katalogu głównego) wpisujesz do `.distignore`, z którego korzysta budowanie paczki wydania.
+Mapowanie jest potrzebne, bo katalog repo nazywa się `woocommerce-asapchat`, a wtyczka musi leżeć w `plugins/asapchat`. Podpięty jest cały katalog repo, dlatego Plugin Check uruchamiasz z `--exclude-directories=.ai,.github,docs,tests,vendor,node_modules` i `--use-pcpignore` (skrypt `bin/plugin-check.sh`). Te same katalogi (oraz `bin`, `.wp-env.json`, `package.json`, `package-lock.json`, `composer.*`, `phpcs.xml.dist`, `phpunit.xml.dist`, pliki `*.md` z katalogu głównego) wpisujesz do `.distignore`, z którego korzysta budowanie paczki wydania, i do `.pcpignore`. Bez `.pcpignore` Plugin Check zgłasza pliki narzędzi z katalogu głównego jako błędy („Hidden files”, „Application files”).
 
 1. `npx @wordpress/env start`. Sklep: `http://localhost:8888`, panel: `http://localhost:8888/wp-admin` (login `admin`, hasło `password`).
 2. `npx @wordpress/env run cli wp plugin activate asapchat`.
-3. Dane przykładowe WooCommerce: `npx @wordpress/env run cli wp plugin install wordpress-importer --activate`, potem `npx @wordpress/env run cli wp import wp-content/plugins/woocommerce/sample-data/sample_products.xml --authors=create`.
+3. Dane przykładowe WooCommerce: `npx @wordpress/env run cli wp plugin install wordpress-importer --activate`, potem `npx @wordpress/env run cli wp import wp-content/plugins/woocommerce.latest-stable/sample-data/sample_products.xml --authors=create` (wp-env instaluje WooCommerce z adresu zip do katalogu `woocommerce.latest-stable`).
 4. Motyw sklepu: `npx @wordpress/env run cli wp theme install storefront --activate`.
 5. Załóż własne darmowe konto AsapChat (`docs/CONNECT-API.md`, punkt 7) i kliknij „Połącz z AsapChat” na ekranie wtyczki. Adres `http://localhost:8888` przechodzi bez `https`.
 6. Inna wersja PHP albo WordPressa z macierzy: zmień `phpVersion` lub `core` w pliku `.wp-env.override.json` (nie commituj go) i uruchom `npx @wordpress/env start --update`.

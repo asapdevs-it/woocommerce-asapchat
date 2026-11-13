@@ -1,0 +1,25 @@
+# Files and folders that never go into the plugin package (WordPress.org trunk).
+# Keep this list in sync with .pcpignore (Plugin Check exclusions) and the --exclude-directories option.
+/.ai
+/.github
+/bin
+/docs
+/tests
+/vendor
+/node_modules
+/.wordpress-org
+/.git
+/.gitignore
+/.gitattributes
+/.distignore
+/.pcpignore
+/.wp-env.json
+/.wp-env.override.json
+/package.json
+/package-lock.json
+/composer.json
+/composer.lock
+/phpcs.xml.dist
+/phpunit.xml.dist
+/.phpunit.result.cache
+/*.md

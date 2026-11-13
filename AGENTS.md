@@ -38,7 +38,7 @@ public/asapchat-delay.js          dokłada skrypt czatu po opóźnieniu
 languages/                        asapchat.pot, asapchat-pl_PL.po/.mo
 .wordpress-org/                   banner, ikona, zrzuty (trafiają do SVN /assets)
 tests/                            testy PHPUnit (Brain Monkey), tests/fixtures/ z odpowiedziami z kontraktu
-.wp-env.json, package.json, package-lock.json, .distignore, composer.json, phpcs.xml.dist, phpunit.xml.dist, .github/workflows/ci.yml
+.wp-env.json, package.json, package-lock.json, .distignore, .pcpignore, bin/plugin-check.sh, composer.json, phpcs.xml.dist, phpunit.xml.dist, .github/workflows/ci.yml
 ```
 
 Zadanie 01 usuwa stary prototyp (`admin/` poza `admin/img/`, `includes/`, `public/`, `languages/`, `woocommerce-asapchat.php`, `class-asapchat.php`, `index.php`, stary `uninstall.php`, `README.txt`) i zakłada ten układ. Nie dopisuj nic do starych plików.
@@ -71,10 +71,10 @@ vendor/bin/phpcs
 vendor/bin/phpunit
 npm ci
 npx @wordpress/env start
-npx @wordpress/env run cli wp plugin check asapchat --exclude-directories=.ai,.github,docs,tests,vendor,node_modules
+bash bin/plugin-check.sh
 ```
 
-`composer install` instaluje tylko narzędzia deweloperskie. `phpcs` sprawdza standardy `WordPress` i `PHPCompatibilityWP`. Do zmergowania zadania 01 te komendy nie mają jeszcze na czym działać: pierwsza bramka to PR zadania 01.
+`composer install` instaluje tylko narzędzia deweloperskie. `phpcs` sprawdza standardy `WordPress` i `PHPCompatibilityWP`. `bin/plugin-check.sh` uruchamia `wp plugin check asapchat --exclude-directories=.ai,.github,docs,tests,vendor,node_modules --use-pcpignore` i kończy się błędem, gdy raport ma choć jeden wiersz `ERROR` (sam Plugin Check zawsze zwraca kod 0). `.pcpignore` pomija te same pliki deweloperskie co `.distignore`, więc sprawdzana jest zawartość paczki. Obie listy trzymaj zgodne. Do zmergowania zadania 01 te komendy nie mają jeszcze na czym działać: pierwsza bramka to PR zadania 01.
 
 Przed każdym PR, który dotyka połączenia, skryptów albo rozłączenia, przeklikaj też przypadki z `docs/CONNECT-API.md`, punkt 7.5.
 
