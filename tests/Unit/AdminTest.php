@@ -174,6 +174,24 @@ final class AdminTest extends TestCase {
 		$this->addToAssertionCount( 1 );
 	}
 
+	public function test_chat_switch_is_saved_from_the_form() {
+		$current = Asapchat_Admin::default_settings();
+
+		$off = Asapchat_Admin::sanitize_settings( array( 'chat_enabled' => '0' ), $current );
+		$on  = Asapchat_Admin::sanitize_settings( array( 'chat_enabled' => '1' ), array_merge( $current, array( 'chat_enabled' => false ) ) );
+
+		$this->assertFalse( $off['chat_enabled'] );
+		$this->assertTrue( $on['chat_enabled'] );
+	}
+
+	public function test_fields_missing_in_the_form_keep_the_saved_value() {
+		$current                 = Asapchat_Admin::default_settings();
+		$current['chat_enabled'] = false;
+		$current['delay_seconds'] = 5;
+
+		$this->assertSame( $current, Asapchat_Admin::sanitize_settings( array(), $current ) );
+	}
+
 	public function test_default_settings_turn_all_widgets_on() {
 		$defaults = Asapchat_Admin::default_settings();
 

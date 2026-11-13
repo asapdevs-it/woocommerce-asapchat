@@ -48,6 +48,7 @@ abstract class TestCase extends PolyfillTestCase {
 		require_once ASAPCHAT_TEST_ROOT . '/includes/class-asapchat-api.php';
 		require_once ASAPCHAT_TEST_ROOT . '/includes/class-asapchat-connect.php';
 		require_once ASAPCHAT_TEST_ROOT . '/includes/class-asapchat-admin.php';
+		require_once ASAPCHAT_TEST_ROOT . '/includes/class-asapchat-frontend.php';
 	}
 
 	/**

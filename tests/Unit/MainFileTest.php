@@ -99,6 +99,14 @@ final class MainFileTest extends TestCase {
 		$this->load_plugin();
 
 		$this->assertFalse( has_action( 'admin_menu', array( 'Asapchat_Admin', 'register_page' ) ) );
+		$this->assertFalse( has_action( 'admin_post_asapchat_save', array( 'Asapchat_Admin', 'handle_save' ) ) );
+	}
+
+	public function test_storefront_scripts_are_hooked_outside_the_admin() {
+		$this->load_plugin();
+
+		$this->assertNotFalse( has_action( 'wp_enqueue_scripts', array( 'Asapchat_Frontend', 'enqueue' ) ) );
+		$this->assertNotFalse( has_filter( 'script_loader_tag', array( 'Asapchat_Frontend', 'filter_tag' ) ) );
 	}
 
 	public function test_settings_screen_is_hooked_in_the_admin() {
@@ -111,6 +119,8 @@ final class MainFileTest extends TestCase {
 		$this->assertNotFalse( has_action( 'admin_post_asapchat_connect_start', array( 'Asapchat_Connect', 'handle_start' ) ) );
 		$this->assertNotFalse( has_action( 'admin_post_asapchat_connect_callback', array( 'Asapchat_Connect', 'handle_callback' ) ) );
 		$this->assertNotFalse( has_action( 'admin_post_asapchat_connect_key', array( 'Asapchat_Connect', 'handle_key' ) ) );
+		$this->assertNotFalse( has_action( 'admin_post_asapchat_save', array( 'Asapchat_Admin', 'handle_save' ) ) );
+		$this->assertFalse( has_action( 'wp_enqueue_scripts', array( 'Asapchat_Frontend', 'enqueue' ) ) );
 		$this->assertFalse( has_action( 'admin_post_nopriv_asapchat_connect_callback' ), 'No handler for logged-out users.' );
 	}
 

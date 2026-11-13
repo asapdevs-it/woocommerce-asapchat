@@ -37,6 +37,59 @@ class Asapchat_Admin {
 		add_action( 'admin_menu', array( __CLASS__, 'register_page' ) );
 		// After WooCommerce registers its admin scripts (wc-enhanced-select).
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_assets' ), 20 );
+		add_action( 'admin_post_asapchat_save', array( __CLASS__, 'handle_save' ) );
+	}
+
+	/**
+	 * "Save changes": local settings from the form (spec point 9, step 1).
+	 *
+	 * @return void
+	 */
+	public static function handle_save() {
+		check_admin_referer( 'asapchat_save' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( '', '', array( 'response' => 403 ) );
+		}
+
+		// Every field is cleaned in sanitize_settings().
+		$input = isset( $_POST['asapchat_settings'] ) && is_array( $_POST['asapchat_settings'] ) ? wp_unslash( $_POST['asapchat_settings'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
+		update_option( 'asapchat_settings', self::sanitize_settings( $input, self::current_settings() ), true );
+
+		self::add_notice( 'saved' );
+		wp_safe_redirect( admin_url( 'options-general.php?page=' . self::PAGE_SLUG ) );
+		exit;
+	}
+
+	/**
+	 * Cleans the posted local settings. Fields that are not in the form keep their saved value.
+	 *
+	 * A switch posts "0" from a hidden field and "1" from the checkbox when it is on.
+	 *
+	 * @param array<string, mixed> $input   Posted asapchat_settings.
+	 * @param array<string, mixed> $current Saved settings.
+	 * @return array<string, mixed>
+	 */
+	public static function sanitize_settings( $input, $current ) {
+		$settings = $current;
+
+		if ( isset( $input['chat_enabled'] ) ) {
+			$settings['chat_enabled'] = '1' === (string) $input['chat_enabled'];
+		}
+
+		return $settings;
+	}
+
+	/**
+	 * Saved local settings with defaults.
+	 *
+	 * @return array<string, mixed>
+	 */
+	public static function current_settings() {
+		$settings = get_option( 'asapchat_settings', array() );
+
+		return wp_parse_args( is_array( $settings ) ? $settings : array(), self::default_settings() );
 	}
 
 	/**
@@ -319,8 +372,7 @@ class Asapchat_Admin {
 		$status   = self::block( $config, 'status' );
 		$links    = self::block( $config, 'links' );
 		$look     = self::block( $config, 'settings' );
-		$settings = get_option( 'asapchat_settings', array() );
-		$settings = wp_parse_args( is_array( $settings ) ? $settings : array(), self::default_settings() );
+		$settings = self::current_settings();
 		$excluded = array_map( 'absint', (array) $settings['excluded_ids'] );
 		$is_woo   = self::woocommerce_active();
 
