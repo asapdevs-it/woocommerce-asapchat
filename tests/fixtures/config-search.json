@@ -1,0 +1,21 @@
+{
+  "v": 1,
+  "shop": {"id": 17, "name": "Kwiatowy", "plan": "free", "ai_conversations_limit": 50},
+  "chat": {
+    "enabled": true,
+    "src": "https://asapchat.io/chat/embedded-widget.js",
+    "attributes": {"main_color": "#112233", "name": "Flora", "shop_id": "17", "token": "abc123"}
+  },
+  "search": {
+    "enabled": true,
+    "src": "https://asapchat.io/search/asap-search-widget.iife.js",
+    "attributes": {"defer": true, "allow_add-to-cart": "true", "selectors": "input[type=search]", "shop_id": "17", "token": "abc123", "shop_engine": "Woocommerce"}
+  },
+  "settings": {"bot_name": "Flora", "main_color": "#112233", "position": "right-bottom", "greeting_1": "Cześć! W czym mogę pomóc?", "greeting_2": ""},
+  "sources": {"orders_connected": true, "products_connected": true, "systems": ["woo"], "connect_url": "https://panel.asapchat.io/admin/shops/17/connect"},
+  "status": {"widget_seen_at": "2026-11-11T10:42:00+01:00", "search_seen_at": null},
+  "plugin": {"latest_version": null, "download_url": null, "changelog_url": null},
+  "loader": {"url": "https://panel.asapchat.io/api/w/17.js?t=abc123"},
+  "links": {"panel": "https://panel.asapchat.io/admin", "settings": "https://panel.asapchat.io/admin/shops/17/edit", "plugin": "https://panel.asapchat.io/admin/shops/17/plugin"},
+  "refresh_after": 86400
+}

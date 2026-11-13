@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-12T11:49:06+00:00\n"
+"POT-Creation-Date: 2026-11-13T10:46:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: asapchat\n"
@@ -33,4 +33,422 @@ msgstr ""
 #. Author of the plugin
 #: asapchat.php
 msgid "AsapCommerce"
+msgstr ""
+
+#: admin/settings-page.php:28
+msgid "Open AsapChat panel"
+msgstr ""
+
+#: admin/settings-page.php:30
+msgid "Disconnect this site from AsapChat? The chat and the search will disappear from your site."
+msgstr ""
+
+#: admin/settings-page.php:33
+msgid "Disconnect"
+msgstr ""
+
+#: admin/settings-page.php:48
+msgid "Dismiss this notice"
+msgstr ""
+
+#: admin/settings-page.php:59
+msgid "The chat and the search are not being added to your site right now."
+msgstr ""
+
+#: admin/settings-page.php:66
+msgid "The connection with AsapChat was interrupted"
+msgstr ""
+
+#: admin/settings-page.php:70
+msgid "This connection is assigned to another domain. Connect this site again."
+msgstr ""
+
+#: admin/settings-page.php:72
+msgid "This shop was deleted in AsapChat. Connect the site to another shop."
+msgstr ""
+
+#: admin/settings-page.php:74
+msgid "The connection was revoked in the AsapChat panel or the install key expired. Connect the site again to bring the chat back."
+msgstr ""
+
+#: admin/settings-page.php:79
+msgid "Connect your store to AsapChat"
+msgstr ""
+
+#: admin/settings-page.php:80
+msgid "AI chat and product search on your site, with no code to paste."
+msgstr ""
+
+#: admin/settings-page.php:89
+msgid "Connect again"
+msgstr ""
+
+#: admin/settings-page.php:91
+msgid "Connect to AsapChat"
+msgstr ""
+
+#: admin/settings-page.php:98
+msgid "Connecting with the button requires an https address and an admin panel on the same domain as the site. Use an install key."
+msgstr ""
+
+#: admin/settings-page.php:102
+msgid "Your widget and exclusion settings have been kept."
+msgstr ""
+
+#: admin/settings-page.php:104
+msgid "No account yet? You will create one in the next step, for free."
+msgstr ""
+
+#: admin/settings-page.php:108
+msgid "Click \"Connect to AsapChat\"."
+msgstr ""
+
+#: admin/settings-page.php:109
+msgid "Log in or create an account and go through a short setup wizard."
+msgstr ""
+
+#: admin/settings-page.php:110
+msgid "You come back here automatically. The chat is already on your site."
+msgstr ""
+
+#: admin/settings-page.php:115
+msgid "After you click, you will go to panel.asapchat.io. The plugin connects to AsapChat only from that moment."
+msgstr ""
+
+#: admin/settings-page.php:116
+msgid "Privacy policy"
+msgstr ""
+
+#: admin/settings-page.php:118
+msgid "Terms of service"
+msgstr ""
+
+#: admin/settings-page.php:123
+msgid "I have an install key"
+msgstr ""
+
+#: admin/settings-page.php:127
+msgid "Install key"
+msgstr ""
+
+#: admin/settings-page.php:129
+msgid "Connect with key"
+msgstr ""
+
+#: admin/settings-page.php:131
+msgid "You will find the key in the AsapChat panel: Shop, Plugin, Install key."
+msgstr ""
+
+#: admin/settings-page.php:159
+msgid "Status"
+msgstr ""
+
+#: admin/settings-page.php:160
+msgid "We check whether the widgets actually appeared on your site."
+msgstr ""
+
+#: admin/settings-page.php:164
+#: admin/settings-page.php:215
+msgid "Chat"
+msgstr ""
+
+#. translators: %s: date and time.
+#: admin/settings-page.php:169
+#, php-format
+msgid "Last seen %s"
+msgstr ""
+
+#: admin/settings-page.php:173
+#: admin/settings-page.php:193
+msgid "Open your store in a new tab to check."
+msgstr ""
+
+#: admin/settings-page.php:177
+msgid "Chat is working"
+msgstr ""
+
+#: admin/settings-page.php:179
+msgid "Not seen on the site yet"
+msgstr ""
+
+#: admin/settings-page.php:184
+msgid "Search"
+msgstr ""
+
+#. translators: %s: date and time.
+#: admin/settings-page.php:189
+#, php-format
+msgctxt "search"
+msgid "Last seen %s"
+msgstr ""
+
+#: admin/settings-page.php:195
+msgid "Connect your products first."
+msgstr ""
+
+#: admin/settings-page.php:199
+msgid "Search is working"
+msgstr ""
+
+#: admin/settings-page.php:201
+msgctxt "search"
+msgid "Not seen on the site yet"
+msgstr ""
+
+#: admin/settings-page.php:203
+msgid "Unavailable"
+msgstr ""
+
+#: admin/settings-page.php:210
+msgid "Widgets"
+msgstr ""
+
+#: admin/settings-page.php:211
+msgid "Turn on or off what should be visible on your site."
+msgstr ""
+
+#: admin/settings-page.php:216
+msgid "A conversation window with the AI assistant on your site."
+msgstr ""
+
+#: admin/settings-page.php:225
+msgid "AsapSearch product search"
+msgstr ""
+
+#: admin/settings-page.php:227
+msgid "Replaces the store search with a fast product search."
+msgstr ""
+
+#: admin/settings-page.php:230
+msgid "The search will turn on once AsapChat imports your products."
+msgstr ""
+
+#: admin/settings-page.php:232
+msgid "Connect products"
+msgstr ""
+
+#: admin/settings-page.php:250
+msgid "Add to cart from search"
+msgstr ""
+
+#: admin/settings-page.php:252
+msgid "An \"Add to cart\" button right in the search results."
+msgstr ""
+
+#: admin/settings-page.php:254
+msgid "Available together with the search."
+msgstr ""
+
+#: admin/settings-page.php:270
+msgid "Look"
+msgstr ""
+
+#: admin/settings-page.php:271
+msgid "These are the same settings as in the AsapChat panel. A change here is visible there and the other way round."
+msgstr ""
+
+#: admin/settings-page.php:275
+msgid "Assistant name"
+msgstr ""
+
+#: admin/settings-page.php:282
+#: admin/settings-page.php:284
+msgid "Main color"
+msgstr ""
+
+#: admin/settings-page.php:290
+msgid "Position on the page"
+msgstr ""
+
+#: admin/settings-page.php:293
+msgid "Bottom right"
+msgstr ""
+
+#: admin/settings-page.php:295
+msgid "Bottom left"
+msgstr ""
+
+#: admin/settings-page.php:301
+msgid "Greeting 1"
+msgstr ""
+
+#: admin/settings-page.php:309
+msgid "Greeting 2"
+msgstr ""
+
+#: admin/settings-page.php:318
+msgid "Where to show"
+msgstr ""
+
+#: admin/settings-page.php:319
+msgid "On the selected pages and products we will show neither the chat nor the search."
+msgstr ""
+
+#: admin/settings-page.php:322
+msgid "Chat delay"
+msgstr ""
+
+#: admin/settings-page.php:325
+msgid "seconds"
+msgstr ""
+
+#: admin/settings-page.php:327
+msgid "How many seconds after entering the page the chat appears. From 0 to 60."
+msgstr ""
+
+#: admin/settings-page.php:331
+msgid "Pages without widgets"
+msgstr ""
+
+#: admin/settings-page.php:341
+msgid "Products without widgets"
+msgstr ""
+
+#: admin/settings-page.php:351
+msgid "Address contains"
+msgstr ""
+
+#: admin/settings-page.php:353
+msgid "One address fragment per line. The widgets will not appear on any page whose address contains this text."
+msgstr ""
+
+#: admin/settings-page.php:359
+msgid "Orders and products source"
+msgstr ""
+
+#: admin/settings-page.php:360
+msgid "Thanks to this the assistant knows your products and answers questions about order status."
+msgstr ""
+
+#: admin/settings-page.php:363
+msgid "Products"
+msgstr ""
+
+#: admin/settings-page.php:365
+#: admin/settings-page.php:373
+msgid "Connected"
+msgstr ""
+
+#: admin/settings-page.php:367
+#: admin/settings-page.php:375
+msgid "Not connected"
+msgstr ""
+
+#: admin/settings-page.php:371
+msgid "Orders"
+msgstr ""
+
+#: admin/settings-page.php:382
+msgid "Connect in AsapChat"
+msgstr ""
+
+#: admin/settings-page.php:387
+msgid "In the AsapChat panel click \"Connect with WooCommerce\". You will see the WooCommerce consent screen, you approve it and you are done. You do not copy any keys."
+msgstr ""
+
+#: admin/settings-page.php:389
+msgid "How to generate API keys in WooCommerce"
+msgstr ""
+
+#: admin/settings-page.php:391
+msgid "Go to WooCommerce, Settings, Advanced, REST API."
+msgstr ""
+
+#: admin/settings-page.php:392
+msgid "Click \"Add key\"."
+msgstr ""
+
+#: admin/settings-page.php:393
+msgid "Enter a description, e.g. \"AsapChat\". Permissions: \"Read\"."
+msgstr ""
+
+#: admin/settings-page.php:394
+msgid "Click \"Generate API key\"."
+msgstr ""
+
+#: admin/settings-page.php:395
+msgid "Copy the Consumer key and the Consumer secret. Paste them in the AsapChat panel after clicking \"Connect in AsapChat\". The secret is visible only once."
+msgstr ""
+
+#: admin/settings-page.php:399
+msgid "No WooCommerce? The assistant then uses the knowledge base that you fill in the AsapChat panel."
+msgstr ""
+
+#: admin/settings-page.php:404
+msgid "Save changes"
+msgstr ""
+
+#: admin/settings-page.php:405
+msgid "The look is saved on your AsapChat account. The other settings stay in WordPress."
+msgstr ""
+
+#: includes/class-asapchat-admin.php:49
+#: includes/class-asapchat-admin.php:50
+msgid "AsapChat"
+msgstr ""
+
+#. translators: 1: plan name, 2: number of AI conversations per month.
+#: includes/class-asapchat-admin.php:196
+#, php-format
+msgid "%1$s plan, %2$d AI conversations per month"
+msgstr ""
+
+#. translators: %s: plan name.
+#: includes/class-asapchat-admin.php:200
+#, php-format
+msgid "%s plan"
+msgstr ""
+
+#. translators: %s: shop name.
+#: includes/class-asapchat-admin.php:268
+#, php-format
+msgid "Connected to the shop %s. The chat is already on your site."
+msgstr ""
+
+#: includes/class-asapchat-admin.php:270
+msgid "Connection cancelled. Nothing has been changed."
+msgstr ""
+
+#: includes/class-asapchat-admin.php:272
+msgid "The connection session expired. Click Connect again."
+msgstr ""
+
+#: includes/class-asapchat-admin.php:274
+msgid "Could not connect. Try again or use an install key."
+msgstr ""
+
+#: includes/class-asapchat-admin.php:276
+msgid "Changes saved."
+msgstr ""
+
+#: includes/class-asapchat-admin.php:278
+msgid "Settings in WordPress saved. The look could not be saved in AsapChat, try again in a moment."
+msgstr ""
+
+#: includes/class-asapchat-admin.php:280
+msgid "Could not refresh the settings from AsapChat. The chat keeps working on the saved settings."
+msgstr ""
+
+#: includes/class-asapchat-admin.php:282
+msgid "Disconnected. The chat and the search have disappeared from your site."
+msgstr ""
+
+#: includes/class-asapchat-admin.php:284
+msgid "Update the AsapChat plugin to get the new settings."
+msgstr ""
+
+#: includes/class-asapchat-admin.php:286
+msgid "This does not look like an install key."
+msgstr ""
+
+#: includes/class-asapchat-admin.php:288
+msgid "The key is invalid, revoked or expired. The key must be used within 24 hours of being generated."
+msgstr ""
+
+#: includes/class-asapchat-admin.php:290
+msgid "This key is already assigned to another domain."
+msgstr ""
+
+#: includes/class-asapchat-admin.php:292
+msgid "Could not connect. Try again in a moment."
 msgstr ""

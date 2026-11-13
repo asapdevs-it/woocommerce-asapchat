@@ -80,6 +80,773 @@
 	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* Root and design tokens (spec 4.1). */
 .asapchat-screen {
-	font-family: "Asapchat Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	--asapchat-bg: #fafafa;
+	--asapchat-line: #e9eaeb;
+	--asapchat-text: #161616;
+	--asapchat-label: #424448;
+	--asapchat-desc: #56595f;
+	--asapchat-accent: #6543f0;
+	--asapchat-accent-dark: #5232dd;
+	--asapchat-tint: #f6f4fe;
+	--asapchat-soft: #ece8fd;
+	--asapchat-field: #d5d7da;
+	--asapchat-green: #05c732;
+	--asapchat-grey: #a4a7ae;
+	--asapchat-red: #d92d20;
+	--asapchat-focus: 0 0 0 3px rgba(101, 67, 240, 0.2);
+	container-type: inline-size;
+}
+
+.asapchat-screen .asapchat-app,
+.asapchat-screen .asapchat-app *,
+.asapchat-screen .asapchat-app *::before,
+.asapchat-screen .asapchat-app *::after {
+	box-sizing: border-box;
+}
+
+.asapchat-screen .asapchat-app {
+	max-width: 960px;
+	margin: 12px auto 0;
+	overflow: hidden;
+	color: var(--asapchat-text);
+	font: 400 14px/1.55 "Asapchat Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	background: var(--asapchat-bg);
+	border: 1px solid var(--asapchat-line);
+	border-radius: 16px;
+}
+
+/* Resets WordPress paragraph margins; :where() keeps it weaker than the spacing rules below. */
+.asapchat-screen :where(.asapchat-app p) {
+	margin: 0;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+/* Header: black bar, white logo, 4 px accent line. */
+.asapchat-screen .asapchat-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px 16px;
+	padding: 14px 24px;
+	background: #161616;
+	border-bottom: 4px solid var(--asapchat-accent);
+}
+
+.asapchat-screen .asapchat-logo {
+	display: block;
+	width: auto;
+	height: 30px;
+}
+
+.asapchat-screen .asapchat-headact {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 18px;
+	margin-left: auto;
+}
+
+.asapchat-screen .asapchat-headact form {
+	margin: 0;
+}
+
+.asapchat-screen .asapchat-headlink,
+.asapchat-screen .asapchat-headlink:hover,
+.asapchat-screen .asapchat-headlink:focus {
+	color: #fff;
+	font-size: 14px;
+	font-weight: 600;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	box-shadow: none;
+}
+
+.asapchat-screen .asapchat-headbtn {
+	padding: 7px 14px;
+	color: #fff;
+	font: inherit;
+	font-size: 14px;
+	font-weight: 600;
+	background: transparent;
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.asapchat-screen .asapchat-headbtn:hover {
+	border-color: #fff;
+}
+
+.asapchat-screen .asapchat-headlink:focus-visible,
+.asapchat-screen .asapchat-headbtn:focus-visible {
+	outline: 2px solid #fff;
+	outline-offset: 2px;
+}
+
+/* Content. */
+.asapchat-screen .asapchat-wrap {
+	padding: 28px 24px 32px;
+}
+
+.asapchat-screen .asapchat-narrow {
+	max-width: 560px;
+	margin: 8px auto 0;
+}
+
+.asapchat-screen .asapchat-h1 {
+	margin: 0;
+	padding: 0;
+	color: var(--asapchat-text);
+	font-size: 30px;
+	font-weight: 800;
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+	overflow-wrap: anywhere;
+}
+
+.asapchat-screen .asapchat-lead {
+	margin-top: 8px;
+	color: var(--asapchat-desc);
+	font-size: 15px;
+}
+
+.asapchat-screen .asapchat-title {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 12px;
+	margin-bottom: 20px;
+}
+
+.asapchat-screen .asapchat-domain {
+	flex-basis: 100%;
+	color: var(--asapchat-desc);
+	font-size: 13px;
+}
+
+.asapchat-screen .asapchat-card {
+	margin-bottom: 16px;
+	padding: 24px;
+	background: #fff;
+	border: 1px solid var(--asapchat-line);
+	border-radius: 16px;
+	box-shadow: 0 6px 20px rgba(15, 26, 23, 0.05);
+}
+
+.asapchat-screen .asapchat-card h2 {
+	margin: 0 0 4px;
+	padding: 0;
+	color: var(--asapchat-text);
+	font-size: 18px;
+	font-weight: 800;
+	line-height: 1.3;
+}
+
+.asapchat-screen .asapchat-desc {
+	color: var(--asapchat-desc);
+	font-size: 13px;
+}
+
+.asapchat-screen .asapchat-card > .asapchat-desc {
+	margin-bottom: 16px;
+}
+
+.asapchat-screen .asapchat-link,
+.asapchat-screen .asapchat-link:hover,
+.asapchat-screen .asapchat-link:focus {
+	color: var(--asapchat-accent);
+	font-weight: 600;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+	box-shadow: none;
+}
+
+.asapchat-screen .asapchat-link:focus-visible {
+	outline: 2px solid var(--asapchat-accent);
+	outline-offset: 2px;
+	border-radius: 2px;
+}
+
+.asapchat-screen .asapchat-center {
+	text-align: center;
+}
+
+.asapchat-screen .asapchat-connect {
+	margin: 24px 0 0;
+}
+
+.asapchat-screen .asapchat-note {
+	margin-top: 12px;
+	color: var(--asapchat-label);
+}
+
+.asapchat-screen .asapchat-kept {
+	margin-top: 14px;
+}
+
+.asapchat-screen .asapchat-consent {
+	margin-top: 20px;
+}
+
+/* Buttons: one primary button per screen, the others white with an outline. */
+.asapchat-screen .asapchat-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	margin: 0;
+	padding: 0 18px;
+	color: var(--asapchat-text);
+	font: inherit;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.2;
+	text-align: center;
+	text-decoration: none;
+	background: #fff;
+	border: 1px solid var(--asapchat-field);
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.asapchat-screen .asapchat-btn:hover {
+	color: var(--asapchat-text);
+	border-color: var(--asapchat-accent);
+}
+
+.asapchat-screen .asapchat-btn.asapchat-primary {
+	min-height: 48px;
+	padding: 0 24px;
+	color: #fff;
+	font-size: 15px;
+	font-weight: 700;
+	background: var(--asapchat-accent);
+	border-color: var(--asapchat-accent);
+}
+
+.asapchat-screen .asapchat-btn.asapchat-primary:hover {
+	background: var(--asapchat-accent-dark);
+	border-color: var(--asapchat-accent-dark);
+}
+
+.asapchat-screen .asapchat-btn:disabled,
+.asapchat-screen .asapchat-btn.asapchat-primary:disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
+}
+
+.asapchat-screen .asapchat-btn.asapchat-wide {
+	width: 100%;
+}
+
+.asapchat-screen .asapchat-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+}
+
+.asapchat-screen .asapchat-sources-action {
+	margin-top: 16px;
+}
+
+.asapchat-screen .asapchat-sources-note {
+	margin-top: 10px;
+}
+
+/* Pills with a dot: green when working, grey otherwise. */
+.asapchat-screen .asapchat-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+	padding: 4px 12px;
+	color: var(--asapchat-label);
+	font-size: 13px;
+	font-weight: 600;
+	white-space: nowrap;
+	background: #f5f5f5;
+	border-radius: 999px;
+}
+
+.asapchat-screen .asapchat-pill::before {
+	content: "";
+	flex: none;
+	width: 8px;
+	height: 8px;
+	background: var(--asapchat-grey);
+	border-radius: 50%;
+}
+
+.asapchat-screen .asapchat-pill.asapchat-pill-ok {
+	color: #0a6b22;
+	background: #eafbee;
+}
+
+.asapchat-screen .asapchat-pill.asapchat-pill-ok::before {
+	background: var(--asapchat-green);
+}
+
+.asapchat-screen .asapchat-pill.asapchat-pill-plan {
+	color: #4a2fc4;
+	white-space: normal;
+	background: var(--asapchat-soft);
+}
+
+.asapchat-screen .asapchat-pill.asapchat-pill-plan::before {
+	display: none;
+}
+
+/* Notices above the cards, closed without JS (hidden checkbox). */
+.asapchat-screen .asapchat-notice {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	margin-bottom: 20px;
+	padding: 12px 16px;
+	font-size: 14px;
+	background: #eafbee;
+	border: 1px solid #bfeecb;
+	border-radius: 10px;
+}
+
+.asapchat-screen .asapchat-notice p {
+	flex: 1;
+}
+
+.asapchat-screen .asapchat-notice.asapchat-notice-error {
+	background: #fef3f2;
+	border-color: #fecdca;
+}
+
+.asapchat-screen .asapchat-notice.asapchat-notice-info {
+	background: var(--asapchat-tint);
+	border-color: var(--asapchat-soft);
+}
+
+.asapchat-screen .asapchat-notice-close {
+	margin-left: auto;
+	color: var(--asapchat-desc);
+	font-size: 18px;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.asapchat-screen .asapchat-notice-toggle {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: 0;
+	opacity: 0;
+}
+
+.asapchat-screen .asapchat-notice-toggle:checked + .asapchat-notice {
+	display: none;
+}
+
+.asapchat-screen .asapchat-notice-toggle:focus-visible + .asapchat-notice .asapchat-notice-close {
+	outline: 2px solid var(--asapchat-accent);
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
+/* Rows: status, switches, sources. */
+.asapchat-screen .asapchat-list {
+	margin-bottom: -14px;
+}
+
+.asapchat-screen .asapchat-item {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 8px 16px;
+	padding: 14px 0;
+	border-top: 1px solid var(--asapchat-line);
+}
+
+.asapchat-screen .asapchat-txt {
+	flex: 1;
+	min-width: 0;
+}
+
+.asapchat-screen .asapchat-txt .asapchat-desc {
+	display: block;
+}
+
+.asapchat-screen .asapchat-item strong {
+	display: block;
+	color: var(--asapchat-text);
+	font-size: 15px;
+	font-weight: 700;
+}
+
+.asapchat-screen .asapchat-item.asapchat-off strong {
+	color: var(--asapchat-grey);
+}
+
+/* Switches instead of checkboxes. */
+.asapchat-screen .asapchat-toggle {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: 0;
+	opacity: 0;
+}
+
+.asapchat-screen .asapchat-sw {
+	position: relative;
+	display: block;
+	flex: none;
+	width: 44px;
+	height: 24px;
+	background: var(--asapchat-field);
+	border-radius: 12px;
+	cursor: pointer;
+	transition: background 0.15s;
+}
+
+.asapchat-screen .asapchat-sw::after {
+	content: "";
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	width: 18px;
+	height: 18px;
+	background: #fff;
+	border-radius: 50%;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+	transition: left 0.15s;
+}
+
+.asapchat-screen .asapchat-toggle:checked + .asapchat-sw {
+	background: var(--asapchat-accent);
+}
+
+.asapchat-screen .asapchat-toggle:checked + .asapchat-sw::after {
+	left: 23px;
+}
+
+.asapchat-screen .asapchat-toggle:focus-visible + .asapchat-sw {
+	outline: 1px solid var(--asapchat-accent);
+	box-shadow: var(--asapchat-focus);
+}
+
+.asapchat-screen .asapchat-toggle:disabled + .asapchat-sw {
+	background: #eeeff0;
+	cursor: not-allowed;
+}
+
+/* Form fields. */
+.asapchat-screen .asapchat-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px 20px;
+}
+
+.asapchat-screen .asapchat-full {
+	grid-column: 1 / -1;
+}
+
+.asapchat-screen .asapchat-field {
+	display: block;
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.asapchat-screen .asapchat-label {
+	display: flex;
+	justify-content: space-between;
+	gap: 8px;
+	width: 100%;
+	margin-bottom: 6px;
+	padding: 0;
+	color: var(--asapchat-label);
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.asapchat-screen .asapchat-label small {
+	color: var(--asapchat-desc);
+	font-size: 12px;
+	font-weight: 400;
+}
+
+.asapchat-screen .asapchat-input {
+	display: block;
+	width: 100%;
+	max-width: none;
+	height: 44px;
+	min-height: 44px;
+	margin: 0;
+	padding: 0 12px;
+	color: var(--asapchat-text);
+	font: inherit;
+	font-size: 14px;
+	line-height: 1.4;
+	background: #fff;
+	border: 1px solid var(--asapchat-field);
+	border-radius: 10px;
+	box-shadow: none;
+}
+
+.asapchat-screen textarea.asapchat-input {
+	height: auto;
+	min-height: 88px;
+	padding: 10px 12px;
+	resize: vertical;
+}
+
+.asapchat-screen select.asapchat-select[multiple] {
+	height: auto;
+	min-height: 132px;
+	padding: 6px;
+	background-image: none;
+}
+
+.asapchat-screen .asapchat-input:focus,
+.asapchat-screen .asapchat-btn:focus-visible {
+	border-color: var(--asapchat-accent);
+	outline: 0;
+	box-shadow: var(--asapchat-focus);
+}
+
+.asapchat-screen .asapchat-field .asapchat-desc {
+	margin-top: 6px;
+}
+
+.asapchat-screen .asapchat-color {
+	display: flex;
+	gap: 8px;
+}
+
+.asapchat-screen .asapchat-color input[type="color"] {
+	flex: none;
+	width: 44px;
+	height: 44px;
+	padding: 3px;
+	background: #fff;
+	border: 1px solid var(--asapchat-field);
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.asapchat-screen .asapchat-seg {
+	position: relative;
+	display: flex;
+	height: 44px;
+	overflow: hidden;
+	border: 1px solid var(--asapchat-field);
+	border-radius: 10px;
+}
+
+.asapchat-screen .asapchat-seg input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: 0;
+	opacity: 0;
+}
+
+.asapchat-screen .asapchat-seg label {
+	display: flex;
+	flex: 1;
+	align-items: center;
+	justify-content: center;
+	padding: 0 8px;
+	color: var(--asapchat-label);
+	font-size: 14px;
+	font-weight: 600;
+	text-align: center;
+	cursor: pointer;
+}
+
+.asapchat-screen .asapchat-seg label + input + label {
+	border-left: 1px solid var(--asapchat-field);
+}
+
+.asapchat-screen .asapchat-seg input:checked + label {
+	color: var(--asapchat-accent);
+	background: var(--asapchat-tint);
+}
+
+.asapchat-screen .asapchat-seg input:focus-visible + label {
+	box-shadow: inset 0 0 0 2px var(--asapchat-accent);
+}
+
+.asapchat-screen .asapchat-unit {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.asapchat-screen .asapchat-unit .asapchat-input {
+	width: 96px;
+}
+
+/* WooCommerce product search (select2) styled close to the mockup chips. */
+.asapchat-screen .select2-container--default .select2-selection--multiple {
+	min-height: 44px;
+	padding: 4px 6px;
+	border: 1px solid var(--asapchat-field);
+	border-radius: 10px;
+}
+
+.asapchat-screen .select2-container--default.select2-container--focus .select2-selection--multiple {
+	border-color: var(--asapchat-accent);
+	box-shadow: var(--asapchat-focus);
+}
+
+.asapchat-screen .select2-container--default .select2-selection--multiple .select2-selection__choice {
+	color: #3a2399;
+	font-size: 13px;
+	font-weight: 600;
+	background: var(--asapchat-soft);
+	border: 0;
+	border-radius: 8px;
+}
+
+/* Expandable blocks (native details). */
+.asapchat-screen .asapchat-more {
+	margin-top: 16px;
+	padding-top: 14px;
+	text-align: left;
+	border-top: 1px solid var(--asapchat-line);
+}
+
+.asapchat-screen .asapchat-more summary {
+	color: var(--asapchat-accent);
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.asapchat-screen .asapchat-more summary:focus-visible {
+	outline: 2px solid var(--asapchat-accent);
+	outline-offset: 3px;
+	border-radius: 4px;
+}
+
+.asapchat-screen .asapchat-more ol {
+	margin: 12px 0 0;
+	padding-left: 20px;
+	color: var(--asapchat-label);
+	list-style: decimal;
+}
+
+.asapchat-screen .asapchat-more li {
+	margin-bottom: 6px;
+}
+
+.asapchat-screen .asapchat-keyrow {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 12px 0 0;
+}
+
+.asapchat-screen .asapchat-keyrow .asapchat-input {
+	flex: 1;
+	min-width: 180px;
+	font-family: ui-monospace, Menlo, Consolas, monospace;
+}
+
+.asapchat-screen .asapchat-more .asapchat-desc {
+	margin-top: 8px;
+}
+
+/* Three steps on the "Not connected" screen. */
+.asapchat-screen .asapchat-steps {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 12px;
+	margin: 24px 0 0;
+	padding: 0;
+	text-align: left;
+	list-style: none;
+	counter-reset: asapchat-step;
+}
+
+.asapchat-screen .asapchat-steps li {
+	margin: 0;
+	padding: 12px;
+	color: var(--asapchat-label);
+	font-size: 13px;
+	background: var(--asapchat-tint);
+	border-radius: 10px;
+	counter-increment: asapchat-step;
+}
+
+.asapchat-screen .asapchat-steps li::before {
+	content: counter(asapchat-step);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	margin-bottom: 8px;
+	color: #fff;
+	font-size: 13px;
+	font-weight: 700;
+	background: var(--asapchat-accent);
+	border-radius: 50%;
+}
+
+.asapchat-screen .asapchat-save {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px 16px;
+	margin-top: 20px;
+}
+
+/* Narrow screens (phone: 390 px). */
+@container (max-width: 720px) {
+
+	.asapchat-screen .asapchat-head {
+		padding: 12px 16px;
+	}
+
+	.asapchat-screen .asapchat-logo {
+		height: 26px;
+	}
+
+	.asapchat-screen .asapchat-headact {
+		flex-basis: 100%;
+		justify-content: space-between;
+		margin-left: 0;
+	}
+
+	.asapchat-screen .asapchat-wrap {
+		padding: 20px 12px 24px;
+	}
+
+	.asapchat-screen .asapchat-h1 {
+		font-size: 24px;
+	}
+
+	.asapchat-screen .asapchat-card {
+		padding: 16px;
+	}
+
+	.asapchat-screen .asapchat-grid,
+	.asapchat-screen .asapchat-steps {
+		grid-template-columns: 1fr;
+	}
+
+	.asapchat-screen .asapchat-item.asapchat-stat {
+		flex-wrap: wrap;
+	}
+
+	.asapchat-screen .asapchat-item.asapchat-stat .asapchat-txt {
+		flex-basis: 100%;
+	}
+
+	.asapchat-screen .asapchat-save .asapchat-btn,
+	.asapchat-screen .asapchat-row .asapchat-btn {
+		width: 100%;
+	}
 }

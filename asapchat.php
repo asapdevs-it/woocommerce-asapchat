@@ -37,6 +37,10 @@ require_once ASAPCHAT_DIR . 'includes/class-asapchat-frontend.php';
 register_activation_hook( __FILE__, 'asapchat_activate' );
 add_action( 'before_woocommerce_init', 'asapchat_declare_wc_compatibility' );
 
+if ( is_admin() ) {
+	Asapchat_Admin::init();
+}
+
 /**
  * Runs on plugin activation.
  *

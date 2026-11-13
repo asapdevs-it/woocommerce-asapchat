@@ -45,6 +45,7 @@ final class MainFileTest extends TestCase {
 
 		Functions\when( 'plugin_dir_path' )->justReturn( ASAPCHAT_TEST_ROOT . '/' );
 		Functions\when( 'plugin_dir_url' )->justReturn( 'https://example.test/wp-content/plugins/asapchat/' );
+		Functions\when( 'is_admin' )->justReturn( false );
 		Functions\when( 'register_activation_hook' )->alias(
 			function ( $file, $callback ) {
 				$this->activation_callback = $callback;
@@ -92,6 +93,21 @@ final class MainFileTest extends TestCase {
 		$this->load_plugin();
 
 		$this->assertSame( 'http://127.0.0.1:9999', ASAPCHAT_BASE );
+	}
+
+	public function test_settings_screen_is_hooked_only_in_the_admin() {
+		$this->load_plugin();
+
+		$this->assertFalse( has_action( 'admin_menu', array( 'Asapchat_Admin', 'register_page' ) ) );
+	}
+
+	public function test_settings_screen_is_hooked_in_the_admin() {
+		Functions\when( 'is_admin' )->justReturn( true );
+
+		$this->load_plugin();
+
+		$this->assertNotFalse( has_action( 'admin_menu', array( 'Asapchat_Admin', 'register_page' ) ) );
+		$this->assertNotFalse( has_action( 'admin_enqueue_scripts', array( 'Asapchat_Admin', 'enqueue_assets' ) ) );
 	}
 
 	public function test_registers_the_hpos_declaration_before_woocommerce_init() {
