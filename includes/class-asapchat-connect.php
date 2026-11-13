@@ -33,6 +33,206 @@ class Asapchat_Connect {
 
 	const RESULT_UNAVAILABLE = 'unavailable';
 
+	const TRANSIENT_PREFIX = 'asapchat_connect_';
+
+	/**
+	 * Hooks the admin-post handlers.
+	 *
+	 * @return void
+	 */
+	public static function init() {
+		add_action( 'admin_post_asapchat_connect_start', array( __CLASS__, 'handle_start' ) );
+		add_action( 'admin_post_asapchat_connect_callback', array( __CLASS__, 'handle_callback' ) );
+	}
+
+	/**
+	 * "Connect to AsapChat": sends the browser to the AsapChat panel (spec point 6, steps 1 to 5).
+	 *
+	 * @return void
+	 */
+	public static function handle_start() {
+		check_admin_referer( 'asapchat_connect' );
+		self::require_admin();
+
+		if ( ! Asapchat_Admin::connect_button_available( home_url(), admin_url() ) ) {
+			self::back_to_screen();
+		}
+
+		// The AsapChat panel is on another host, so wp_safe_redirect() would refuse it.
+		wp_redirect( self::start_url( get_current_user_id() ) ); // phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
+		exit;
+	}
+
+	/**
+	 * Return from the AsapChat panel (spec point 6, step 7).
+	 *
+	 * There is no nonce: the request comes back from AsapChat. It is protected by the
+	 * one-time state, the logged-in administrator session and PKCE (spec point 6, step 8).
+	 *
+	 * @return void
+	 */
+	public static function handle_callback() {
+		self::require_admin();
+
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- see the method description.
+		$params = array(
+			'state' => isset( $_GET['state'] ) ? sanitize_text_field( wp_unslash( $_GET['state'] ) ) : '',
+			'code'  => isset( $_GET['code'] ) ? sanitize_text_field( wp_unslash( $_GET['code'] ) ) : '',
+			'error' => isset( $_GET['error'] ) ? sanitize_text_field( wp_unslash( $_GET['error'] ) ) : '',
+		);
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
+
+		$result = self::finish_connect( get_current_user_id(), $params );
+
+		Asapchat_Admin::add_notice( $result['notice'], $result['value'] );
+		self::back_to_screen();
+	}
+
+	/**
+	 * Prepares a connection attempt and builds the address of the AsapChat consent screen.
+	 *
+	 * A new click overwrites the previous attempt of the same user.
+	 *
+	 * @param int $user_id Current user.
+	 * @return string
+	 */
+	public static function start_url( $user_id ) {
+		$state    = wp_generate_password( 32, false );
+		$verifier = self::random_verifier();
+
+		// Two hours: a new user goes through the sign-up and the whole AsapChat wizard on the way.
+		set_transient(
+			self::TRANSIENT_PREFIX . $user_id,
+			array(
+				'state'    => $state,
+				'verifier' => $verifier,
+			),
+			2 * HOUR_IN_SECONDS
+		);
+
+		$query = array(
+			'platform'       => 'wordpress',
+			'site_url'       => home_url(),
+			'return_url'     => admin_url( 'admin-post.php?action=asapchat_connect_callback' ),
+			'state'          => $state,
+			'code_challenge' => self::challenge( $verifier ),
+		);
+
+		return ASAPCHAT_BASE . '/connect?' . http_build_query( $query, '', '&', PHP_QUERY_RFC3986 );
+	}
+
+	/**
+	 * Checks the return from AsapChat and exchanges the code for the token.
+	 *
+	 * @param int                                               $user_id Current user.
+	 * @param array{state: string, code: string, error: string} $params  Query parameters of the return address.
+	 * @return array{notice: string, value: string} Notice code for the screen (spec point 4.5).
+	 */
+	public static function finish_connect( $user_id, $params ) {
+		$key     = self::TRANSIENT_PREFIX . $user_id;
+		$attempt = get_transient( $key );
+
+		if ( ! is_array( $attempt ) || empty( $attempt['state'] ) || empty( $attempt['verifier'] )
+			|| '' === $params['state'] || ! hash_equals( (string) $attempt['state'], $params['state'] ) ) {
+			return self::result( 'state_expired' );
+		}
+
+		// The state works only once, also when the user cancelled.
+		delete_transient( $key );
+
+		if ( '' !== $params['error'] ) {
+			return self::result( 'cancelled' );
+		}
+
+		if ( '' === $params['code'] ) {
+			return self::result( 'exchange_failed' );
+		}
+
+		// The code is single use and expires after 120 seconds, so a failed exchange is never retried.
+		$response = Asapchat_Api::exchange_code( $params['code'], (string) $attempt['verifier'] );
+		$data     = $response['data'];
+
+		if ( 200 !== $response['status'] || ! is_array( $data )
+			|| ! isset( $data['token'] ) || ! is_string( $data['token'] ) || ! preg_match( self::TOKEN_PATTERN, $data['token'] )
+			|| ! isset( $data['config'] ) || ! is_array( $data['config'] ) ) {
+			return self::result( 'exchange_failed' );
+		}
+
+		if ( ! self::is_supported_config( $data['config'] ) ) {
+			return self::result( 'update_plugin' );
+		}
+
+		self::save_connection( $data['token'], $data['config'] );
+
+		$shop_name = isset( $data['config']['shop']['name'] ) ? (string) $data['config']['shop']['name'] : '';
+
+		return self::result( 'connected', $shop_name );
+	}
+
+	/**
+	 * PKCE code challenge: base64url( sha256( verifier ) ) without padding, 43 characters.
+	 *
+	 * @param string $verifier Code verifier.
+	 * @return string
+	 */
+	public static function challenge( $verifier ) {
+		return self::base64url( hash( 'sha256', $verifier, true ) );
+	}
+
+	/**
+	 * Random PKCE code verifier, 64 characters from [A-Za-z0-9_-].
+	 *
+	 * @return string
+	 */
+	private static function random_verifier() {
+		return self::base64url( random_bytes( 48 ) );
+	}
+
+	/**
+	 * Base64url without padding (RFC 7636).
+	 *
+	 * @param string $bytes Raw bytes.
+	 * @return string
+	 */
+	private static function base64url( $bytes ) {
+		return rtrim( strtr( base64_encode( $bytes ), '+/', '-_' ), '=' ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- PKCE encoding, not obfuscation.
+	}
+
+	/**
+	 * Builds a result for the screen notice.
+	 *
+	 * @param string $notice Notice code.
+	 * @param string $value  Value for the notice text.
+	 * @return array{notice: string, value: string}
+	 */
+	private static function result( $notice, $value = '' ) {
+		return array(
+			'notice' => $notice,
+			'value'  => $value,
+		);
+	}
+
+	/**
+	 * Stops unless the user can manage the plugin.
+	 *
+	 * @return void
+	 */
+	private static function require_admin() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( '', '', array( 'response' => 403 ) );
+		}
+	}
+
+	/**
+	 * Goes back to Settings > AsapChat.
+	 *
+	 * @return void
+	 */
+	private static function back_to_screen() {
+		wp_safe_redirect( admin_url( 'options-general.php?page=' . Asapchat_Admin::PAGE_SLUG ) );
+		exit;
+	}
+
 	/**
 	 * The saved connection.
 	 *

@@ -39,6 +39,7 @@ add_action( 'before_woocommerce_init', 'asapchat_declare_wc_compatibility' );
 
 if ( is_admin() ) {
 	Asapchat_Admin::init();
+	Asapchat_Connect::init();
 }
 
 /**
